@@ -1,3 +1,5 @@
+
+ console.log(name);
  //   <article>
   //   <div class="item__img">
   //     <img src="../images/logo.png" alt="Photographie d'un canapé">
@@ -36,3 +38,9 @@
 
   //   </div>
   // </article>
+
+   async function getPost(){
+    const postId = getPostId;
+
+
+  }
