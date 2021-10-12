@@ -41,8 +41,7 @@ function getPostId(){
                 <label for="color-select">Choisir une couleur :</label>
                 <select name="color-select" id="colors">
                     <option value="">--SVP, choisissez une couleur --</option>
-                    <option value="vert">vert</option>
-                    <option value="blanc">blanc</option>
+                    ${product.colors.map(color =>`<option value="${color}">${color}</option>`)}
                 </select>
               </div>
   
@@ -56,34 +55,42 @@ function getPostId(){
               <button id="addToCart">Ajouter au panier</button>
             </div>
   
-          </div>`;
-
-       
-        //   function selectColor(){
-        //     let selectColors = document.getElementById(colors);
-        //     let options = document.querySelectorAll('#colors option');
-        //     let option = options.value;
-
-        //     selectColors.appendChild(option);
-        //     console.log(selectColors);
-        //   console.log(options);
-        //     if (options > colors[0]){
-        //       for(let i = 1; i = options.length; i++){
-        //         `<option value="">--SVP, ${colors[i]} --</option>`
-              
-        //       }
-
+            </div>`;
             
-        //     }
-        // }
-        // selectColor();
+            let numberProducts = document.querySelector('#quantity');
+            numberProducts.value = parseInt(numberProducts.value) +1;
+                                        
+           numberProducts.addEventListener('change', number());
+                                          
+            
+            function number(e){
+
+              console.log(e);
+            };
+           
+           
+            
       }
+
+     
+        
+      
+     
     }
   })
-  .catch(function(err) {
-    //displayed error
-    console.log('erreur');
-    
-  })
-};
-getPostId()
+    .catch(function(err) {
+      //displayed error
+      let item = document.querySelector('.item');
+      let article = document.createElement('article');
+      item.appendChild(article);
+      article.innerHTML = `<div class="item__content__titlePrice">
+      <p id="description">La fiche produit n'est pas disponible pour le moment, veuillez réessayer ultérieurement ou contactez-nous <a href="mailto:support@name.com">par mail</a></p>
+      </div>`;
+      let emailTo = document.querySelector('#description a');
+      console.log(emailTo);
+      emailTo.style.color = "white";
+      emailTo.style.textDecoration = "none";
+      emailTo.style.fontWeight = "bold";  
+    })
+  };
+  getPostId()
