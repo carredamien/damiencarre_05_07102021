@@ -2,7 +2,7 @@ let searchParams =  new URLSearchParams(location.search);
 let paramsId =  searchParams.get("id");
 let urlId = `http://localhost:3000/api/products/${paramsId}`;
 let product = "";
-let numberOfKanap = document.querySelector('#quantity').value;
+
 
 
 //connect API and fetch post
@@ -69,7 +69,7 @@ function getPost(product){
 
         <div class="item__content__settings__quantity">
           <label for="itemQuantity">Nombre d'article(s) (1-100) :</label>
-          <input type="number" name="itemQuantity" min="1" max="100" value="1" id="quantity">
+          <input type="number" name="itemQuantity" min="1" max="100" value="${newProduct.quantity}" id="quantity">
         </div>
       </div>
 
@@ -78,8 +78,41 @@ function getPost(product){
       </div>
 
       </div>`;
-      addToCart();
+   
+      
+      function addToCart() {
+        const colors = document.querySelector('#colors');
+        const option = document.querySelector('#colors option');
+        console.log(option);
+        colors.addEventListener('change', (e) =>{
+          // console.log(e.target.value);
+          if (e.target.value ){
+              console.log(e.target.value);
+          }
+          if(option = ""){
+            console.log('veuillez sectionner une couleur');
+
+          }        
+        })
         
+        
+        const btnAddToCart = document.querySelector("#addToCart");
+        btnAddToCart.addEventListener('click', ()=>{
+          let numberOfKanap = document.querySelector('#quantity').value;
+          
+          console.log(numberOfKanap);
+          // e.preventDefault();
+          // console.log(numberOfKanap.value);
+         
+          // let ProductLocalStorage = localStorage.getItem(numberOfKanap);
+     
+          
+          
+        })
+          
+          
+      }; 
+      addToCart();
 };  
 
 //displayed error
@@ -97,50 +130,5 @@ function getError(){
   emailTo.style.fontWeight = "bold";  
 };
     
-    // let quantity = document.getElementById('quantity');
-    // quantity = parseInt(quantity.value);
-    // console.log(quantity);
-    // function submit(e){
-    //   console.log(e);
-    // e.preventDefault();
-    //   console.log(e);
-    // }
-    
-    // let infoProduct = getPost();
-    // console.log(infoProduct);
-    //mise en place de local storage
-    // function saveProduct(){
-      //   let storageProducts = [];
-//   console.log(newProduct);
-
-
-// }
-// saveProduct(newProduct);
-// function getAddToCArt(){
-  //   addToCart.addEventListener("click", () => {
-    
-    
-    // if (quantity.value > 0 && quantity.value < 100) {
-      //   // ------ Création du produit qui sera ajouté au panier
-      //   let productAdded = {
-        //     name: productCardName.innerHTML,
-        //     price: parseFloat(productCardPrice.innerHTML),
-        //     quantity: parseFloat(document.querySelector("#bearNum").value),
-        //     _id: id,
-        //   };
-        
-        // };
-        function addToCart() {
-            const btnAddToCart = document.querySelector("#addToCart");
-
-
-            btnAddToCart.addEventListener('click', (e)=>{
-              // console.log(e);
-              e.preventDefault();
-              console.log(e);
-              console.log(numberOfKanap.target.value);
-              
-            })
-
-            
-        };   
+   
+          
