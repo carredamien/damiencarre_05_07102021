@@ -101,8 +101,10 @@ function getPost(product){
             id: paramsId,
             name: product.name,
             image: product.imageUrl,
+            altTxt:product.altTxt ,
             color: colors.value,
-            quantity: parseInt(quantityOfKanap.value)
+            quantity: parseInt(quantityOfKanap.value),
+            price: product.price
           };
           
           //si la couleur et les quantités sont remplies, j'ajoute

@@ -1,5 +1,5 @@
 //APPROCHE MODULES
-var app = {
+let app = {
   //connect to api and variables init
   url : `http://localhost:3000/api/products`, 
   products : "",
