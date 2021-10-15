@@ -4,7 +4,6 @@ let urlId = `http://localhost:3000/api/products/${paramsId}`;
 let product = "";
 
 
-
 //connect API and fetch post
 function getPostId(){
   fetch(urlId)
@@ -27,35 +26,24 @@ getPostId();
 
 //displayed product
 function getPost(product){
-        
-  let newProduct = {
-    id : paramsId,
-    name: product.name,
-    price : product.price,
-    colors : product.colors,
-    image : product.imageUrl,
-    description : product.description,
-    altTxt : product.altTxt,
-    quantity: ""
-  };
   
   let item = document.querySelector('.item');
   let article = document.createElement('article');
   item.appendChild(article);
   article.innerHTML =  `
     <div class="item__img">
-    <img src="${newProduct.image}" alt="${newProduct.altTxt}">
+    <img src="${product.imageUrl}" alt="${product.altTxt}">
     </div>
     <div class="item__content">
 
       <div class="item__content__titlePrice">
-        <h1 id="title">${newProduct.name}</h1>
-        <p>Prix : <span id="price">${newProduct.price}</span>€</p>
+        <h1 id="title">${product.name}</h1>
+        <p>Prix : <span id="price">${product.price}</span>€</p>
       </div>
 
       <div class="item__content__description">
         <p class="item__content__description__title">Description :</p>
-        <p id="description">${newProduct.description}</p>
+        <p id="description">${product.description}</p>
       </div>
 
       <div class="item__content__settings">
@@ -63,13 +51,13 @@ function getPost(product){
           <label for="color-select">Choisir une couleur :</label>
           <select name="color-select" id="colors">
               <option value="">--SVP, choisissez une couleur --</option>
-              ${newProduct.colors.map(color =>`<option value="${color}">${color}</option>`)}
+              ${product.colors.map(color =>`<option value="${color}">${color}</option>`)}
           </select>
         </div>
 
         <div class="item__content__settings__quantity">
           <label for="itemQuantity">Nombre d'article(s) (1-100) :</label>
-          <input type="number" name="itemQuantity" min="1" max="100" value="${newProduct.quantity}" id="quantity">
+          <input type="number" name="itemQuantity" min="1" max="100" value="0" id="quantity">
         </div>
       </div>
 
@@ -81,39 +69,67 @@ function getPost(product){
    
       
       function addToCart() {
-        const colors = document.querySelector('#colors');
-        const option = document.querySelector('#colors option');
-        console.log(option);
-        colors.addEventListener('change', (e) =>{
-          // console.log(e.target.value);
-          if (e.target.value ){
-              console.log(e.target.value);
-          }
-          if(option = ""){
-            console.log('veuillez sectionner une couleur');
 
-          }        
-        })
-        
-        
+        const colors = document.querySelector('#colors');
+        const quantityOfKanap = document.querySelector('#quantity');
         const btnAddToCart = document.querySelector("#addToCart");
-        btnAddToCart.addEventListener('click', ()=>{
-          let numberOfKanap = document.querySelector('#quantity').value;
-          
-          console.log(numberOfKanap);
-          // e.preventDefault();
-          // console.log(numberOfKanap.value);
-         
-          // let ProductLocalStorage = localStorage.getItem(numberOfKanap);
-     
-          
-          
+        
+        //ici, je récupère la valeur de la couleur
+        colors.addEventListener('change', (e) =>{
+          let color = e.target.value;
+          return color;
         })
+        
+        //ici, je recupère la quantité
+        quantityOfKanap.addEventListener('change', (e) =>{
+          let quantity = e.target.value;
+          return quantity;
+        })
+        
+        
+        btnAddToCart.addEventListener('click', (e) => {
+          e.preventDefault();
           
+          addToStorage();
+        })
+        
+        function addToStorage(){
           
+          let  kanapStorage = [];
+          
+          let kanap = {
+            id: paramsId,
+            name: product.name,
+            image: product.imageUrl,
+            color: colors.value,
+            quantity: parseInt(quantityOfKanap.value)
+          };
+          
+          //si la couleur et les quantités sont remplies, j'ajoute
+          if (kanap.color && kanap.quantity !== 0 && kanap.quantity < 100){
+            kanap = JSON.stringify(kanap);
+
+              if( kanap.id !=""|| kanap.id !== undefined || kanap.id !== null){
+              
+                localStorage.setItem('kanap', kanap);
+                kanap = JSON.parse(kanap);
+                console.log(kanap);
+                kanapStorage.push(kanap);
+               
+
+              }else{
+                 localStorage.getItem('kanap');
+                 kanap = JSON.parse(kanap); 
+              }
+            
+            }    
+             
+          }
+
       }; 
       addToCart();
 };  
+
 
 //displayed error
 function getError(){
