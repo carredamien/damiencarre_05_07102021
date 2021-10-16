@@ -94,40 +94,34 @@ function getPost(product){
         })
         
         function addToStorage(){
-          
           let  kanapStorage = [];
-          
-          let kanap = {
-            id: paramsId,
-            name: product.name,
-            image: product.imageUrl,
-            altTxt:product.altTxt ,
-            color: colors.value,
-            quantity: parseInt(quantityOfKanap.value),
-            price: product.price
-          };
-          
-          //si la couleur et les quantités sont remplies, j'ajoute
+
+          // si la couleur et les quantités sont remplies, j'ajoute
           if (kanap.color && kanap.quantity !== 0 && kanap.quantity < 100){
-            kanap = JSON.stringify(kanap);
-
-              if( kanap.id !=""|| kanap.id !== undefined || kanap.id !== null){
-              
-                localStorage.setItem('kanap', kanap);
-                kanap = JSON.parse(kanap);
-                console.log(kanap);
-                kanapStorage.push(kanap);
-               
-
-              }else{
-                 localStorage.getItem('kanap');
-                 kanap = JSON.parse(kanap); 
-              }
             
-            }    
-             
-          }
-
+            // if( kanap.id !=""|| kanap.id !== undefined || kanap.id !== null){
+              
+            //   if (!kanapStorage.includes(kanap.id)){
+            //     console.log('ok');
+            //     kanap = JSON.stringify(kanap);
+            //     localStorage.setItem('kanap', kanap);
+            //     kanap = JSON.parse(kanap);
+            //     kanapStorage.push(kanap);
+            //     console.log(localStorage);
+            //     console.log(kanapStorage);
+                
+            //   }else{
+            //     console.log('no');
+            //     localStorage.getItem('kanap');
+            //     kanap = JSON.stringify(kanap);
+            //     kanap = JSON.parse(kanap); 
+            //   }
+            
+                
+            // }
+              
+          }   
+        }
       }; 
       addToCart();
 };  

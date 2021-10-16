@@ -46,20 +46,13 @@
 
 
 
-
-  
- 
-        
-        
-        
-        
-        
         
 // };
 // //loading
 // document.addEventListener('DOMContentLoaded', app.init);
 
 let cartOfKanap = JSON.parse(localStorage.getItem("kanap"));
+let kanapStorage = cartOfKanap;
 const cartItems = document.getElementById('cart__items');
 let cartArticle = document.querySelector('#cart__items article');
 
@@ -67,34 +60,121 @@ let cartArticle = document.querySelector('#cart__items article');
 function getCart(){
 
   cartItems.appendChild(cartArticle);
-  cartArticle.innerHTML =  `
-  <div class="cart__item__img">
-    <img src="${cartOfKanap.image}" alt="Photographie d'un canapé">
-  </div>
-  <div class="cart__item__content">
-    <div class="cart__item__content__titlePrice">
-      <h2>${cartOfKanap.name}</h2>
-      <p>${cartOfKanap.price} €</p>
-    </div>
-    <div class="cart__item__content__settings">
-      <div class="cart__item__content__settings__quantity">
-        <p>Qté : </p>
-        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${cartOfKanap.quantity}">
-      </div>
-      <div class="cart__item__content__settings__delete">
-        <p class="deleteItem">Supprimer</p>
-      </div>
-    </div>
-  </div>`;
+  
+    // cartArticle.innerHTML =  `
+    // <div class="cart__item__img">
+    //   <img src="${cartOfKanap.image}" alt="Photographie d'un canapé">
+    // </div>
+    // <div class="cart__item__content">
+    //   <div class="cart__item__content__titlePrice">
+    //     <h2>${cartOfKanap.name}</h2>
+    //     <p>${cartOfKanap.price} €</p>
+    //   </div>
+    //   <div class="cart__item__content__settings">
+    //     <div class="cart__item__content__settings__quantity">
+    //       <p>Qté : </p>
+    //       <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${cartOfKanap.quantity}">
+    //     </div>
+    //     <div class="cart__item__content__settings__delete">
+    //       <p class="deleteItem">Supprimer</p>
+    //     </div>
+    //   </div>
+    // </div>`;
+
   
 }
+
 getCart();
 
-document.addEventListener('click', (e)=>{
-  document.getElementsByClassName('deleteItem');
-  cartOfKanap.e = localStorage.clear();
-})
-// deleteItem.addEventListener('click', (e) =>{
-
+//   document.addEventListener('click', (e)=>{
+//   document.getElementsByClassName('deleteItem');
+//   cartOfKanap.e = localStorage.removeItem('kanap');
+//   location.reload();
 // })
 
+
+// function totalKanap(){
+
+// total = kanapStorage.length * (cartOfKanap.price * cartOfKanap.quantity);
+// console.log(total);
+// console.log(total);
+  // cartOfKanap{
+  //   altTxt: "Photo d'un canapé d'angle, vert, trois places",
+  //   color: "Green",
+  //   id: "055743915a544fde83cfdfc904935ee7",
+  //   image: "http://localhost:3000/images/kanap03.jpeg",
+  //   name: "Kanap Calycé",
+  //   price: 3199,
+  //   quantity: 1,
+
+  // }
+  // articles * (quantité * price) +
+
+// }
+
+
+// totalKanap(cartOfKanap);
+
+
+let form = document.querySelector(".cart__order__form");
+let firstName = document.getElementById("firstName");
+let lastName = document.getElementById("lastName");
+let address = document.getElementById("address");
+let city = document.getElementById("city");
+let email = document.getElementById("email");
+let btnOrder = document.getElementById("order");
+let formContact = [];
+
+firstName.addEventListener('blur', (e)=>{
+  const errorFName = document.getElementById('firstNameErrorMsg');
+ 
+  firstName = e.target.value; 
+  firstName? errorFName.textContent = '' : errorFName.textContent = 'Veuillez entrer votre prénom';
+  firstName = firstName.toLowerCase();
+
+})
+lastName.addEventListener('blur', (e)=>{
+  const errorLName = document.getElementById('lastNameErrorMsg');
+  lastName = e.target.value;
+  lastName? errorLName.textContent = '' : errorLName.textContent = 'Veuillez entrer votre nom';
+  lastName = lastName.toLowerCase();
+  
+  
+})
+address.addEventListener('blur', (e)=>{
+  const errorAddress = document.getElementById('addressErrorMsg');
+  address = e.target.value;
+  address? errorAddress.textContent = '' : errorAddress.textContent = 'Veuillez entrer votre adresse';
+  address = address.toLowerCase();
+})
+const errorCity = document.getElementById('cityErrorMsg');
+city.addEventListener('blur', (e)=>{
+  city = e.target.value;
+  city? errorCity.textContent = '' : errorCity.textContent = 'Veuillez entrer votre ville';
+  city = city.toLowerCase();
+})
+// var emailReg = new RegExp(/^([w-.]+)@((?:[w]+.)+)([a-zA-Z]{2,4})/i);
+// // var valid = emailReg.test(email);
+const errorEmail = document.getElementById('emailErrorMsg');
+email.addEventListener('blur', (e)=>{
+  email = e.target.value;
+  email? errorEmail.textContent = '' : errorEmail.textContent = 'Veuillez entrer votre email';
+  validerEmail();
+  re.test(String(email).toLowerCase());
+  console.log(re);
+  // email = email.toLowerCase();
+  
+  // if(valid){
+    //   errorEmail.textContent = "";
+    // }else{
+      //   errorEmail.textContent = "adresse email invalid";
+      // }
+      
+      
+      
+    })
+    
+    function validerEmail(email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+  }
