@@ -38,101 +38,117 @@
 //   },
 
 //   deleteKanap: function(){
-//     app.deleteItem.addEventListener('click', (e)=>{
-// console.log(e);
-//     });
+  //     app.deleteItem.addEventListener('click', (e)=>{
+    // console.log(e);
+    //     });
     
-//   },
-
-
-
-        
-// };
-// //loading
-// document.addEventListener('DOMContentLoaded', app.init);
-
-let cartOfKanap = JSON.parse(localStorage.getItem("kanap"));
-let kanapStorage = cartOfKanap;
-const cartItems = document.getElementById('cart__items');
-let cartArticle = document.querySelector('#cart__items article');
-
+    //   },
+    
+    
+    
+    
+    // };
+    // //loading
+    // document.addEventListener('DOMContentLoaded', app.init);
+    
+    let cartOfKanap = JSON.parse(localStorage.getItem("kanap"));
+    const cartItems = document.getElementById('cart__items');
+    let quantity = document.querySelectorAll('.itemQuantity');
 
 function getCart(){
+  if(cartOfKanap){
+    for (kanap of cartOfKanap){
+      
+      let kanaptotal = parseInt(kanap.quantity) * parseFloat(kanap.price);
 
-  cartItems.appendChild(cartArticle);
-  
-    // cartArticle.innerHTML =  `
-    // <div class="cart__item__img">
-    //   <img src="${cartOfKanap.image}" alt="Photographie d'un canapé">
-    // </div>
-    // <div class="cart__item__content">
-    //   <div class="cart__item__content__titlePrice">
-    //     <h2>${cartOfKanap.name}</h2>
-    //     <p>${cartOfKanap.price} €</p>
-    //   </div>
-    //   <div class="cart__item__content__settings">
-    //     <div class="cart__item__content__settings__quantity">
-    //       <p>Qté : </p>
-    //       <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${cartOfKanap.quantity}">
-    //     </div>
-    //     <div class="cart__item__content__settings__delete">
-    //       <p class="deleteItem">Supprimer</p>
-    //     </div>
-    //   </div>
-    // </div>`;
+      let cartArticle = document.createElement('article');
+      cartArticle.classList.add('cart__item');
+      cartItems.appendChild(cartArticle);
+      cartArticle.setAttribute('data-id', kanap.id);
+      cartArticle.innerHTML =  
+      `<div class="cart__item__img">
+        <img src="${kanap.image}" alt="${kanap.altTxt}">
+      </div>
+      <div class="cart__item__content">
+        <div class="cart__item__content__titlePrice">
+          <h2>${kanap.name}</h2>
+          <p>${kanaptotal} €</p>
+        </div>
+        <div class="cart__item__content__settings">
+          <div class="cart__item__content__settings__quantity">
+            <p>Qté :</p>
+            <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${kanap.quantity}">
+          </div>
+          <div class="cart__item__content__settings__delete">
+            <p class="deleteItem">Supprimer</p>
+          </div>
+        </div>
+      </div>`;
+          
+      let kanapQuantity = document.querySelector('.itemQuantity');
+   
+      kanapQuantity.addEventListener('change', (e)=>{
+        quantity = e.target.value;
+        console.log(quantity);
+        let price = document.querySelector('.cart__item__content__titlePrice p');
+        price.innerHTML =  `${quantity * parseFloat(kanap.price)} €`;
+        
+      })
+      // // if(kanap.quantity){
+      //   let quantityValue = kanap.quantity;
+      //   console.log(quantityValue);
+      //         quantityValue.addEventListener('change', (e)=>{
+      //               e.target.value
+      //         })      
+                    // quantityValue.addEventListener('change', (e)=>{
+                      //   console.log(e);
+                      // console.log(e.target.value);
+                      // console.log(e);
+                      // e.target.value;
+                      // console.log(e.target.value);
+                    // })
+                    // }    
+                  };//fin de boucle
+                } else{
+                  let cartArticle = document.createElement('article');
+                  cartArticle.classList.add('cart__item');
+                  cartItems.appendChild(cartArticle);
+                  cartArticle.innerHTML = `Vous n'avez toujours pas trouvé le kanap de vos rêves ?`
+            };
+          };
+          getCart();
+          
+          // if(!kanap){
+          //   let deleteItem = document.querySelector('.deleteItem');
+          //   deleteItem.addEventListener('click', ()=>{
+              
+          //       deleteItem = localStorage.removeItem('kanap');
+          //       location.reload();
+          //     });
+          //     }
+          
+                  
+                  
+                  
 
-  
-}
-
-getCart();
-
-//   document.addEventListener('click', (e)=>{
-//   document.getElementsByClassName('deleteItem');
-//   cartOfKanap.e = localStorage.removeItem('kanap');
-//   location.reload();
-// })
-
-
-// function totalKanap(){
-
-// total = kanapStorage.length * (cartOfKanap.price * cartOfKanap.quantity);
-// console.log(total);
-// console.log(total);
-  // cartOfKanap{
-  //   altTxt: "Photo d'un canapé d'angle, vert, trois places",
-  //   color: "Green",
-  //   id: "055743915a544fde83cfdfc904935ee7",
-  //   image: "http://localhost:3000/images/kanap03.jpeg",
-  //   name: "Kanap Calycé",
-  //   price: 3199,
-  //   quantity: 1,
-
-  // }
-  // articles * (quantité * price) +
-
-// }
-
-
-// totalKanap(cartOfKanap);
-
-
-let form = document.querySelector(".cart__order__form");
-let firstName = document.getElementById("firstName");
-let lastName = document.getElementById("lastName");
-let address = document.getElementById("address");
-let city = document.getElementById("city");
-let email = document.getElementById("email");
-let btnOrder = document.getElementById("order");
-let formContact = [];
-
-firstName.addEventListener('blur', (e)=>{
-  const errorFName = document.getElementById('firstNameErrorMsg');
- 
-  firstName = e.target.value; 
-  firstName? errorFName.textContent = '' : errorFName.textContent = 'Veuillez entrer votre prénom';
-  firstName = firstName.toLowerCase();
-
-})
+                  
+                  let form = document.querySelector(".cart__order__form");
+                  let firstName = document.getElementById("firstName");
+                  let lastName = document.getElementById("lastName");
+                  let address = document.getElementById("address");
+                  let city = document.getElementById("city");
+                  let email = document.getElementById("email");
+                  let btnOrder = document.getElementById("order");
+                  let formContact = [];
+                  
+                  firstName.addEventListener('blur', (e)=>{
+                    const errorFName = document.getElementById('firstNameErrorMsg');
+                    
+                    firstName = e.target.value; 
+                    firstName? errorFName.textContent = '' : errorFName.textContent = 'Veuillez entrer votre prénom';
+                    firstName = firstName.toLowerCase();
+                    
+                  })
 lastName.addEventListener('blur', (e)=>{
   const errorLName = document.getElementById('lastNameErrorMsg');
   lastName = e.target.value;

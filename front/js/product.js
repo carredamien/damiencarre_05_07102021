@@ -89,58 +89,90 @@ function getPost(product){
         
         btnAddToCart.addEventListener('click', (e) => {
           e.preventDefault();
-          
           addToStorage();
         })
         
         function addToStorage(){
-          let  kanapStorage = [];
+          let kanapStorage = [];
+          let kanap = { id: paramsId,               
+                        image: product.imageUrl,
+                        name:product.name,
+                        altTxt: product.altTxt,
+                        price: product.price,
+                        color: colors.value,
+                        quantity: quantity.value
+                      };
 
-          // si la couleur et les quantités sont remplies, j'ajoute
-          if (kanap.color && kanap.quantity !== 0 && kanap.quantity < 100){
-            
-            // if( kanap.id !=""|| kanap.id !== undefined || kanap.id !== null){
-              
-            //   if (!kanapStorage.includes(kanap.id)){
-            //     console.log('ok');
-            //     kanap = JSON.stringify(kanap);
-            //     localStorage.setItem('kanap', kanap);
-            //     kanap = JSON.parse(kanap);
-            //     kanapStorage.push(kanap);
-            //     console.log(localStorage);
-            //     console.log(kanapStorage);
-                
-            //   }else{
-            //     console.log('no');
-            //     localStorage.getItem('kanap');
-            //     kanap = JSON.stringify(kanap);
-            //     kanap = JSON.parse(kanap); 
-            //   }
-            
-                
-            // }
-              
-          }   
-        }
-      }; 
-      addToCart();
-};  
-
-
-//displayed error
-function getError(){
-  let item = document.querySelector('.item');
-  let article = document.createElement('article');
-  item.appendChild(article);
-  article.innerHTML = `<div class="item__content__titlePrice">
-  <p id="description">La fiche produit n'est pas disponible pour le moment, veuillez réessayer ultérieurement ou contactez-nous <a href="mailto:support@name.com">par mail</a></p>
-  </div>`;
-  let emailTo = document.querySelector('#description a');
-  console.log(emailTo);
-  emailTo.style.color = "white";
-  emailTo.style.textDecoration = "none";
-  emailTo.style.fontWeight = "bold";  
-};
-    
-   
+        // si la couleur et les quantités sont remplies, j'ajoute
+        if (colors.value && quantityOfKanap.value !== 0 && quantityOfKanap.value < 100){
+          if (localStorage.getItem("kanap") !== null) {
+            kanapStorage = JSON.parse(localStorage.getItem("kanap"));
+          }
           
+          kanapStorage.push(kanap);
+          localStorage.setItem("kanap", JSON.stringify(kanapStorage));
+        }
+          
+
+          //   let  kanapStorage = [];
+          //   let kanap = { id: paramsId,               
+          //                 image: product.imageUrl,
+          //               };
+          //   kanapStorage.push(kanap);
+          //   kanap = JSON.stringify(kanap);
+          //   localStorage.setItem("kanap", kanap);
+          //   kanap = JSON.parse(kanap);
+          //   console.log(kanapStorage);
+    
+
+           
+          //   // console.log(kanapStorage);
+
+      
+          
+          
+          // if( kanap.id !=""|| kanap.id !== undefined || kanap.id !== null){
+            
+            //   if (!kanapStorage.includes(kanap.id)){
+              //     console.log('ok');
+              //     kanap = JSON.stringify(kanap);
+              //     localStorage.setItem('kanap', kanap);
+              //     kanap = JSON.parse(kanap);
+              //     kanapStorage.push(kanap);
+              //     console.log(localStorage);
+              //     console.log(kanapStorage);
+              
+              //   }else{
+                //     console.log('no');
+                //     localStorage.getItem('kanap');
+                //     kanap = JSON.stringify(kanap);
+                //     kanap = JSON.parse(kanap); 
+                //   }
+                
+                
+                // }
+                
+              }   
+            // }
+          }; 
+          addToCart();
+        };  
+        
+        
+        //displayed error
+        function getError(){
+          let item = document.querySelector('.item');
+          let article = document.createElement('article');
+          item.appendChild(article);
+          article.innerHTML = `<div class="item__content__titlePrice">
+          <p id="description">La fiche produit n'est pas disponible pour le moment, veuillez réessayer ultérieurement ou contactez-nous <a href="mailto:support@name.com">par mail</a></p>
+          </div>`;
+          let emailTo = document.querySelector('#description a');
+          console.log(emailTo);
+          emailTo.style.color = "white";
+          emailTo.style.textDecoration = "none";
+          emailTo.style.fontWeight = "bold";  
+        };
+        
+        
+    
