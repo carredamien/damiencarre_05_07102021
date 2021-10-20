@@ -71,20 +71,8 @@ function getPost(product){
       function addToCart() {
 
         const colors = document.querySelector('#colors');
-        const quantityOfKanap = document.querySelector('#quantity');
+        const quantity = document.querySelector('#quantity');
         const btnAddToCart = document.querySelector("#addToCart");
-        
-        //ici, je récupère la valeur de la couleur
-        colors.addEventListener('change', (e) =>{
-          let color = e.target.value;
-          return color;
-        })
-        
-        //ici, je recupère la quantité
-        quantityOfKanap.addEventListener('change', (e) =>{
-          let quantity = e.target.value;
-          return quantity;
-        })
         
         
         btnAddToCart.addEventListener('click', (e) => {
@@ -92,6 +80,7 @@ function getPost(product){
           addToStorage();
         })
         
+        // console.log(quantity.value);
         function addToStorage(){
           let kanapStorage = [];
           let kanap = { id: paramsId,               
@@ -103,14 +92,33 @@ function getPost(product){
                         quantity: quantity.value
                       };
 
+        //LOCALSTORAGE
         // si la couleur et les quantités sont remplies, j'ajoute
-        if (colors.value && quantityOfKanap.value !== 0 && quantityOfKanap.value < 100){
-          if (localStorage.getItem("kanap") !== null) {
-            kanapStorage = JSON.parse(localStorage.getItem("kanap"));
+        // let setStorage = localStorage.setItem('kanap', kanap);
+        if (colors.value && quantity.value != 0 && quantity.value < 100){ //s'il y a une couleur et une quantité
+        
+          let getStorage = JSON.parse(localStorage.getItem('kanap'));
+          if (getStorage != null) {
+            
+            const hasColor = getStorage.filter(
+              (x) => x.id === kanap.id && x.color ===colors.value);
+  
+              if (hasColor && hasColor.length) {
+                console.log('if');
+                hasColor[0].quantity += quantity;
+              } else {
+                console.log('else');
+                kanapStorage.push(kanap);
+              }
+            kanapStorage.setItem("kanap", JSON.stringify(kanap));
+          
+          }else{
+
+            kanapStorage.push(kanap);
+            localStorage.setItem("kanap", JSON.stringify(kanapStorage));
           }
           
-          kanapStorage.push(kanap);
-          localStorage.setItem("kanap", JSON.stringify(kanapStorage));
+          
         }
           
 

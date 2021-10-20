@@ -84,71 +84,91 @@ function getCart(){
           </div>
         </div>
       </div>`;
+
+      // onClick=deleteProduct("${kanap.id}")
           
       let kanapQuantity = document.querySelector('.itemQuantity');
-   
+    
       kanapQuantity.addEventListener('change', (e)=>{
         quantity = e.target.value;
-        console.log(quantity);
         let price = document.querySelector('.cart__item__content__titlePrice p');
         price.innerHTML =  `${quantity * parseFloat(kanap.price)} €`;
-        
       })
-      // // if(kanap.quantity){
-      //   let quantityValue = kanap.quantity;
-      //   console.log(quantityValue);
-      //         quantityValue.addEventListener('change', (e)=>{
-      //               e.target.value
-      //         })      
-                    // quantityValue.addEventListener('change', (e)=>{
-                      //   console.log(e);
-                      // console.log(e.target.value);
-                      // console.log(e);
-                      // e.target.value;
-                      // console.log(e.target.value);
-                    // })
-                    // }    
-                  };//fin de boucle
-                } else{
-                  let cartArticle = document.createElement('article');
-                  cartArticle.classList.add('cart__item');
-                  cartItems.appendChild(cartArticle);
-                  cartArticle.innerHTML = `Vous n'avez toujours pas trouvé le kanap de vos rêves ?`
-            };
-          };
-          getCart();
-          
-          // if(!kanap){
-          //   let deleteItem = document.querySelector('.deleteItem');
-          //   deleteItem.addEventListener('click', ()=>{
-              
-          //       deleteItem = localStorage.removeItem('kanap');
-          //       location.reload();
-          //     });
-          //     }
-          
+
+      //suppression d'articles
+      let deleteItem = document.querySelectorAll('.deleteItem');
+      
+      for( let i = 0; i < deleteItem.length; i++){
+        deleteItem[i].setAttribute('onclick',kanap.id );
+        
+
+      }
+    
+      
+      
+        
+    
+    
+        
+      // }
+       
+      
+// // if(kanap.quantity){
+//   let quantityValue = kanap.quantity;
+//   console.log(quantityValue);
+//         quantityValue.addEventListener('change', (e)=>{
+//               e.target.value
+//         })      
+              // quantityValue.addEventListener('change', (e)=>{
+                //   console.log(e);
+                // console.log(e.target.value);
+                // console.log(e);
+                // e.target.value;
+                // console.log(e.target.value);
+              // })
+              // }    
+            };//fin de boucle
+          } else{
+            let cartArticle = document.createElement('article');
+            cartArticle.classList.add('cart__item');
+            cartItems.appendChild(cartArticle);
+            cartArticle.innerHTML = `Vous n'avez toujours pas trouvé le kanap de vos rêves ?`
+      };
+    };
+    getCart();
+    
+    // if(!kanap){
+    //   let deleteItem = document.querySelector('.deleteItem');
+    //   deleteItem.addEventListener('click', ()=>{
+        
+    //       deleteItem = localStorage.removeItem('kanap');
+    //       location.reload();
+    //     });
+    //     }
+    
                   
                   
                   
 
                   
-                  let form = document.querySelector(".cart__order__form");
-                  let firstName = document.getElementById("firstName");
-                  let lastName = document.getElementById("lastName");
-                  let address = document.getElementById("address");
-                  let city = document.getElementById("city");
-                  let email = document.getElementById("email");
-                  let btnOrder = document.getElementById("order");
-                  let formContact = [];
-                  
-                  firstName.addEventListener('blur', (e)=>{
-                    const errorFName = document.getElementById('firstNameErrorMsg');
-                    
-                    firstName = e.target.value; 
-                    firstName? errorFName.textContent = '' : errorFName.textContent = 'Veuillez entrer votre prénom';
-                    firstName = firstName.toLowerCase();
-                    
-                  })
+let form = document.querySelector(".cart__order__form");
+let firstName = document.getElementById("firstName");
+let lastName = document.getElementById("lastName");
+let address = document.getElementById("address");
+let city = document.getElementById("city");
+let email = document.getElementById("email");
+let btnOrder = document.getElementById("order");
+let formContact = [];
+
+firstName.addEventListener('blur', (e)=>{
+  const errorFName = document.getElementById('firstNameErrorMsg');
+  
+  firstName = e.target.value; 
+  firstName? errorFName.textContent = '' : errorFName.textContent = 'Veuillez entrer votre prénom';
+  firstName = firstName.toLowerCase();
+  
+})
+
 lastName.addEventListener('blur', (e)=>{
   const errorLName = document.getElementById('lastNameErrorMsg');
   lastName = e.target.value;
@@ -161,7 +181,7 @@ address.addEventListener('blur', (e)=>{
   const errorAddress = document.getElementById('addressErrorMsg');
   address = e.target.value;
   address? errorAddress.textContent = '' : errorAddress.textContent = 'Veuillez entrer votre adresse';
-  address = address.toLowerCase();
+  // address = address.toLowerCase();
 })
 const errorCity = document.getElementById('cityErrorMsg');
 city.addEventListener('blur', (e)=>{
@@ -186,11 +206,10 @@ email.addEventListener('blur', (e)=>{
       //   errorEmail.textContent = "adresse email invalid";
       // }
       
-      
-      
+       
     })
     
-    function validerEmail(email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-  }
+  //   function validerEmail(email) {
+  //     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  //     return re.test(email);
+  // }
