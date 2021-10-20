@@ -1,108 +1,140 @@
-// let app = {
-//   // fetch and convert localStorage
-//   cartOfKanap: JSON.parse(localStorage.getItem("kanap")),
-//   cartItems: document.getElementById('cart__items'),
-//   cartArticle: document.querySelector('#cart__items article'),
-//   deleteItem: document.querySelector(".deleteItem"),
+let app = {
+  // fetch and convert localStorage
+  cartOfKanap: JSON.parse(localStorage.getItem("kanap")),
+  cartItems: document.getElementById('cart__items'),
+  cartArticle: document.querySelector('#cart__items article'),
+  deleteItem: document.querySelector(".deleteItem"),
+  cartArticle: document.createElement('article'),
   
-//   init: function(){     
-//     app.getCart();
-//     app.deleteKanap();
+  init: function(){     
+    app.getCart();
+    // app.deleteKanap();
     
     
-//   },
-//   getCart: function(){
+  },
+  getCart: function(){
     
-//     const cartItems = document.getElementById('cart__items');
-//     let cartArticle = document.querySelector('#cart__items article');
-//     cartItems.appendChild(cartArticle);
-//     cartArticle.innerHTML =  `
-//     <div class="cart__item__img">
-//     <img src="${app.cartOfKanap.image}" alt="${app.cartOfKanap.altTxt}">
-//     </div>
-//     <div class="cart__item__content">
-//     <div class="cart__item__content__titlePrice">
-//     <h2>${app.cartOfKanap.name}</h2>
-//     <p>${app.cartOfKanap.price} €</p>
-//     </div>
-//     <div class="cart__item__content__settings">
-//     <div class="cart__item__content__settings__quantity">
-//     <p>Qté : </p>
-//     <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${app.cartOfKanap.quantity}">
-//     </div>
-//     <div class="cart__item__content__settings__delete">
-//     <p class="deleteItem">Supprimer</p>
-//     </div>
-//     </div>
-//     </div>`;
-//   },
+    if(this.cartOfKanap){
+      for (this.kanap of this.cartOfKanap){
+        kQuantity = parseInt(this.kanap.quantity);
+        const kanaptotal= parseInt(kQuantity) * parseFloat(this.kanap.price);
+   
+      console.log(this.kanap);
+            app.cartArticle.classList.add('cart__item');
+            app.cartItems.appendChild(app.cartArticle);
+            app.cartArticle.setAttribute('data-id', this.kanap.id);
+            app.cartArticle.innerHTML =  
+            `<div class="cart__item__img">
+              <img src="${this.kanap.image}" alt="${this.kanap.altTxt}">
+            </div>
+            <div class="cart__item__content">
+              <div class="cart__item__content__titlePrice">
+                <h2>${this.kanap.name}</h2>
+                <p>${kanaptotal} €</p>
+              </div>
+              <div class="cart__item__content__settings">
+                <div class="cart__item__content__settings__quantity">
+                  <p>Qté :</p>
+                  <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${kQuantity}">
+                </div>
+                <div class="cart__item__content__settings__delete">
+                  <p class="deleteItem"onClick= "deleteProduct(${this.kanap.id})">Supprimer</p>
+                </div>
+              </div>
+            </div>`;
+       }
+    };
+   ////////////////
+    // cartItems.appendChild(cartArticle);
+    // cartArticle.innerHTML =  `
+    // <div class="cart__item__img">
+    // <img src="${app.cartOfKanap.image}" alt="${app.cartOfKanap.altTxt}">
+    // </div>
+    // <div class="cart__item__content">
+    // <div class="cart__item__content__titlePrice">
+    // <h2>${app.cartOfKanap.name}</h2>
+    // <p>${app.cartOfKanap.price} €</p>
+    // </div>
+    // <div class="cart__item__content__settings">
+    // <div class="cart__item__content__settings__quantity">
+    // <p>Qté : </p>
+    // <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${app.cartOfKanap.quantity}">
+    // </div>
+    // <div class="cart__item__content__settings__delete">
+    // <p class="deleteItem">Supprimer</p>
+    // </div>
+    // </div>
+    // </div>`;
+  },
 
-//   deleteKanap: function(){
-  //     app.deleteItem.addEventListener('click', (e)=>{
-    // console.log(e);
-    //     });
+  deleteKanap: function(){
+      app.deleteItem.addEventListener('click', (e)=>{
+    console.log(e);
+        });
     
-    //   },
-    
-    
+      },
     
     
-    // };
-    // //loading
-    // document.addEventListener('DOMContentLoaded', app.init);
     
-    let cartOfKanap = JSON.parse(localStorage.getItem("kanap"));
-    const cartItems = document.getElementById('cart__items');
-    let quantity = document.querySelectorAll('.itemQuantity');
+    
+    };
+    //loading
+    document.addEventListener('DOMContentLoaded', app.init);
+    
+// let cartOfKanap = JSON.parse(localStorage.getItem("kanap"));
+// const cartItems = document.getElementById('cart__items');
+// let quantity = document.querySelectorAll('.itemQuantity');
 
-function getCart(){
-  if(cartOfKanap){
-    for (kanap of cartOfKanap){
+// function getCart(){
+//   if(cartOfKanap){
+//     for (kanap of cartOfKanap){
       
-      let kanaptotal = parseInt(kanap.quantity) * parseFloat(kanap.price);
+//       let kanaptotal = parseInt(kanap.quantity) * parseFloat(kanap.price);
 
-      let cartArticle = document.createElement('article');
-      cartArticle.classList.add('cart__item');
-      cartItems.appendChild(cartArticle);
-      cartArticle.setAttribute('data-id', kanap.id);
-      cartArticle.innerHTML =  
-      `<div class="cart__item__img">
-        <img src="${kanap.image}" alt="${kanap.altTxt}">
-      </div>
-      <div class="cart__item__content">
-        <div class="cart__item__content__titlePrice">
-          <h2>${kanap.name}</h2>
-          <p>${kanaptotal} €</p>
-        </div>
-        <div class="cart__item__content__settings">
-          <div class="cart__item__content__settings__quantity">
-            <p>Qté :</p>
-            <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${kanap.quantity}">
-          </div>
-          <div class="cart__item__content__settings__delete">
-            <p class="deleteItem">Supprimer</p>
-          </div>
-        </div>
-      </div>`;
+//       let cartArticle = document.createElement('article');
+//       cartArticle.classList.add('cart__item');
+//       cartItems.appendChild(cartArticle);
+//       cartArticle.setAttribute('data-id', kanap.id);
+//       cartArticle.innerHTML =  
+//       `<div class="cart__item__img">
+//         <img src="${kanap.image}" alt="${kanap.altTxt}">
+//       </div>
+//       <div class="cart__item__content">
+//         <div class="cart__item__content__titlePrice">
+//           <h2>${kanap.name}</h2>
+//           <p>${kanaptotal} €</p>
+//         </div>
+//         <div class="cart__item__content__settings">
+//           <div class="cart__item__content__settings__quantity">
+//             <p>Qté :</p>
+//             <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${kanap.quantity}">
+//           </div>
+//           <div class="cart__item__content__settings__delete">
+//             <p class="deleteItem"onClick= "deleteProduct(${kanap.id})">Supprimer</p>
+//           </div>
+//         </div>
+//       </div>`;
 
-      // onClick=deleteProduct("${kanap.id}")
+//       // onClick=deleteProduct("${kanap.id}")
           
-      let kanapQuantity = document.querySelector('.itemQuantity');
+//       let kanapQuantity = document.querySelector('.itemQuantity');
     
-      kanapQuantity.addEventListener('change', (e)=>{
-        quantity = e.target.value;
-        let price = document.querySelector('.cart__item__content__titlePrice p');
-        price.innerHTML =  `${quantity * parseFloat(kanap.price)} €`;
-      })
+//       kanapQuantity.addEventListener('change', (e)=>{
+//         quantity = e.target.value;
+//         let price = document.querySelector('.cart__item__content__titlePrice p');
+//         price.innerHTML =  `${quantity * parseFloat(kanap.price)} €`;
+//       })
 
-      //suppression d'articles
-      let deleteItem = document.querySelectorAll('.deleteItem');
+//       //suppression d'articles
+//       let deleteItem = document.querySelectorAll('.deleteItem');
       
-      for( let i = 0; i < deleteItem.length; i++){
-        deleteItem[i].setAttribute('onclick',kanap.id );
-        
+//       function deleteProduct(){
+//         console.log('hihih');
+//       }deleteProduct();
+      // for( let i = 0; i < deleteItem.length; i++){
+      //   // deleteItem[i].setAttribute('onclick',kanap.id );
 
-      }
+      // }
     
       
       
@@ -127,15 +159,15 @@ function getCart(){
                 // console.log(e.target.value);
               // })
               // }    
-            };//fin de boucle
-          } else{
-            let cartArticle = document.createElement('article');
-            cartArticle.classList.add('cart__item');
-            cartItems.appendChild(cartArticle);
-            cartArticle.innerHTML = `Vous n'avez toujours pas trouvé le kanap de vos rêves ?`
-      };
-    };
-    getCart();
+    //         };//fin de boucle
+    //       } else{
+    //         let cartArticle = document.createElement('article');
+    //         cartArticle.classList.add('cart__item');
+    //         cartItems.appendChild(cartArticle);
+    //         cartArticle.innerHTML = `Vous n'avez toujours pas trouvé le kanap de vos rêves ?`
+    //   };
+    // };
+    // getCart();
     
     // if(!kanap){
     //   let deleteItem = document.querySelector('.deleteItem');
