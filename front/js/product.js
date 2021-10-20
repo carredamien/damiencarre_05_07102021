@@ -105,12 +105,14 @@ function getPost(product){
   
               if (hasColor && hasColor.length) {
                 console.log('if');
-                hasColor[0].quantity += quantity;
+                hasColor[0].quantity += quantity.value;
+                console.log(quantity.value);
               } else {
                 console.log('else');
-                kanapStorage.push(kanap);
+                getStorage.push(kanap);
+                // console.log(quantity.value);
               }
-            kanapStorage.setItem("kanap", JSON.stringify(kanap));
+            localStorage.setItem("kanap", JSON.stringify(kanap));
           
           }else{
 
