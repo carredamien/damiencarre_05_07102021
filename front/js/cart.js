@@ -42,49 +42,35 @@ function getCart(){  //fonction qui affiche le panier
     
   }
   
-  
-  
-  
-  // function UpdateQuantity(e){
-    //   for(let itemQuantity of itemQuantitys){
-      //     console.log(e.target.value);
-      //   }
-      
-      // }
-      // UpdateQuantity();
-      // function handleUpdateQuantity(){
-        
-        //     let kanapQuantitys = document.querySelector('.itemQuantity');
-        //     let price = document.querySelector('.cart__item__content__titlePrice p');
-        //     for (i=0; i<kanapQuantitys.length; i++){
-          //       kanapQuantitys[i].addEventListenerAll('change', (e)=>{
-            //         quantity = e.target.value;
-            //         kanapPrice = (parseInt(quantity) * parseFloat(kanap.price));
-            
-            // console.log(quantity, kanap.price, kanapPrice);
-            //         price.innerHTML =  `${kanapPrice} €`;
-            //       })
-  
-            //     }
-            // }
-          }
-          getCart();
-          
-          // gestion du tarif selon les quantité
-          function updateQuantity(e,id){
-       
-          
-            let quantity = e.target.value;
-            // let itemQuantity = document.querySelector('.itemQuantity');
-            // let kanapTotal = parseInt(quantity) * kPrice;
-         
-            if (quantity != kanap.quantity){
-              console.log(kanap.id);
-              const kanapQuantity = kanapStorage.filter(
-                      (x) => x.id === kanap.id);
-                console.log(kanapQuantity);
 
-            }
+}
+getCart();
+
+// gestion du tarif selon les quantité
+function updateQuantity(e, id){
+
+let quantity = parseInt(e.target.value); 
+let idQuantity = id;
+
+if (quantity){
+  
+  const kanapQuantity = kanapStorage.filter(
+    (x) => x.id === idQuantity);
+    console.log('ca passe');
+    console.log(kanapQuantity[0].price);
+    console.log(kanapQuantity);
+  for (kanapQ of kanapQuantity){ 
+    
+      let itemQuantity = document.querySelector('.itemQuantity');
+      // console.log(item²à)pQuantity.value);
+      let price = document.querySelector('.cart__item__content__titlePrice p');
+      console.log(quantity);
+      price.innerHTML =  `${(quantity * parseFloat(kanapQ.price))} €`;
+  }
+    
+}
+          
+         
 
 
 
