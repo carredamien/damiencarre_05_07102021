@@ -1,6 +1,6 @@
 //Récupération du localstorage
 let kanapStorage = JSON.parse(localStorage.getItem("kanap")); //récupération du localstorage
-console.log(kanapStorage);
+// console.log(kanapStorage);
 let price ="document.querySelector('.cart__item__content__titlePrice p')";
  //gestion du tarif selon les quantité
 
@@ -33,102 +33,252 @@ function getCart(){  //fonction qui affiche le panier
     <div class="cart__item__content__settings">
     <div class="cart__item__content__settings__quantity">
       <p>Qté : </p>
-      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${kanap.quantity}" onChange="updateQuantity(event, '${kanap.id}')">
+      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${kanap.quantity}" onChange="handleUpdateKanapQuantity(event, '${kanap.id}')">
     </div>
       <div class="cart__item__content__settings__delete">
         <p class="deleteItem" onClick= "deleteProduct('${kanap.id}')">Supprimer</p>
       </div>
     </div>`
-    
   }
-  
 
 }
 getCart();
 
 // gestion du tarif selon les quantité
-function updateQuantity(e, id){
 
-let quantity = parseInt(e.target.value); 
-let idQuantity = id;
+function handleUpdateKanapQuantity(e, productId){
 
-if (quantity){
+   console.log(productId);
+   let quantity = e.target.value;
+   let price = document.querySelector('.cart__item__content__titlePrice p');
+   price.innerHTML =  `${quantity * parseFloat(kanap.price)} €`;
+ 
   
-  const kanapQuantity = kanapStorage.filter(
-    (x) => x.id === idQuantity);
-    console.log('ca passe');
-    console.log(kanapQuantity[0].price);
-    console.log(kanapQuantity);
-  for (kanapQ of kanapQuantity){ 
-    
-      let itemQuantity = document.querySelector('.itemQuantity');
-      // console.log(item²à)pQuantity.value);
-      let price = document.querySelector('.cart__item__content__titlePrice p');
-      console.log(quantity);
-      price.innerHTML =  `${(quantity * parseFloat(kanapQ.price))} €`;
-  }
-    
 }
-          
-         
 
 
+///////////////////////////////////
+// const itemQuantity = document.querySelectorAll('.itemQuantity');
+// for (let item of itemQuantity){
+//   item.addEventListener('change', handleUpdateQuantity);
+// }
+// function handleUpdateQuantity(){
+ 
+//   let quantity = this.value;// je récupère la quantité 
+//   let titlePrice = document.querySelector('.cart__item__content__titlePrice p');
+//  let kPrice = (parseInt(quantity)* parseFloat(kanap.price));
+//  titlePrice.innerHTML = `<p>${kPrice} €</p>`;
+// }
 
-            // if (colors.value && quantity.value != 0 && quantity.value < 100) { //s'il y a une couleur et une quantité
+///////////////////////////
+// const itemQuantity = document.querySelectorAll('.itemQuantity');
+// for (let item of itemQuantity){
+//   item.addEventListener('change', handleUpdateQuantity(kanap.id));
+// }
+  
+//   function handleUpdateQuantity(){
+//     console.log(this.value);
+    
+   
+    // console.log(price);
+// console.log(kQuantity);
+//  let kPrice = (parseInt(this.value) * parseFloat(price));
 
-            //   let getStorage = JSON.parse(localStorage.getItem('kanap'));
+//  let titlePrice = document.querySelector('cart__item__content__titlePrice p');
+//  console.log(titlePrice);
+//  titlePrice.innerHTML = `<p>${kPrice} €</p>`;
+// }
+
+
+// function updateQuantity(e, id){
+// let itemQuantity = document.querySelectorAll('.itemQuantity');
+//   for (item of itemQuantity){
+//     let quantity = parseInt(e.target.value);
+//     let idQuantity = id;
+//     console.log( idQuantity, kanap.id);  //pourquoi les id sont différents
+
+//     if (idQuantity == kanap.id && quantity != kanap.quantity){
       
-            //   if (getStorage != null) {
+//       kanapPrice = (quantity * kanap.price);
       
-            //     const hasColor = getStorage.filter(
-            //       (x) => x.id === kanap.id && x.color === colors.value);
+//       let priceP = document.querySelector('.cart__item__content__titlePrice p');
       
-            //     if (hasColor && hasColor.length) {
-            //       hasColor[0].quantity = parseInt(hasColor[0].quantity)
-            //       hasColor[0].quantity += parseInt(quantity.value);
-            //     } else {
+//       // for(priceP of pricePs){
+//         priceP.innerHTML = `<p>${kanapPrice} €</p>`
+//       // }
+//     }
+//   }
+
+
+// }
+
+
+//formulaire 
+
+let form = document.querySelector(".cart__order__form");
+let firstName = document.getElementById("firstName");
+let lastName = document.getElementById("lastName");
+let address = document.getElementById("address");
+let city = document.getElementById("city");
+let email = document.getElementById("email");
+let btnOrder = document.getElementById("order");
+let formContact = [];
+const errorFName = document.getElementById('firstNameErrorMsg');
+const errorLName = document.getElementById('lastNameErrorMsg');
+const errorAddress = document.getElementById('addressErrorMsg');
+const errorCity = document.getElementById('cityErrorMsg');
+const errorEmail = document.getElementById('emailErrorMsg');
+
+
+firstName.addEventListener('blur', function (){
+validFirstName(this);
+});
+const validFirstName = function(inputFirstName){
+  let fNameRegex = new RegExp('^[a-zA-Z]+$', 'g');
+
+  let testFName = fNameRegex.test(inputFirstName.value);
+  if (testFName){
+    errorFName.textContent = ''; 
+  }else{
+      errorFName.textContent = 'Votre prénom n\'est pas valide';
+    }
+inputFirstName.value.toLowerCase();
+};
+
+
+lastName.addEventListener('blur', function (){
+validLastName(this);
+});
+const validLastName = function(inputLastName){
+  let lNameRegex = new RegExp('^[a-zA-Z]+$', 'g');
+
+  let testLName = lNameRegex.test(inputLastName.value);
+  if (testLName){
+    errorLName.textContent = ''; 
+  }else{
+      errorLName.textContent = 'Votre nom n\'est pas valide';
+    }
+inputLastName.value.toLowerCase();
+};
+
+address.addEventListener('blur', function (){
+validAddress(this);
+});
+const validAddress = function(inputAddress){
+  let addressRegex = new RegExp('^[a-zA-Z]+$', 'g');
+
+  let testAddress = addressRegex.test(inputAddress.value);
+  if (testAddress){
+    errorAddress.textContent = ''; 
+  }else{
+      errorAddress.textContent = 'Votre adresse n\'est pas valide';
+    }
+inputAddress.value.toLowerCase();
+};
+
+
+city.addEventListener('blur', function (){
+validCity(this);
+});
+const validCity = function(inputCity){
+  let cityRegex = new RegExp('^[a-zA-Z- ]+$', 'g');
+
+  let testCity = cityRegex.test(inputCity.value);
+  if (testCity){
+    errorCity.textContent = ''; 
+  }else{
+      errorCity.textContent = 'Votre ville n\'est pas valide';
+    }
+inputCity.value.toLowerCase();
+};
+
+
+email.addEventListener('blur', function (){
+validEmail(this);
+});
+const validEmail = function(inputEmail){
+  let emailRegex = new RegExp('^[a-zA-Z09.-_]+[@]{1}[a-zA-Z09.-_]+[.]{1}[a-zA-Z]{2,10}$', 'g');
+
+  let testEmail = emailRegex.test(inputEmail.value);
+  if (testEmail){
+    errorEmail.textContent = ''; 
+  }else{
+      errorEmail.textContent = 'Votre email n\'est pas valide';
+    }
+inputEmail.value.toLowerCase();
+};
+
+  
+
+
+
+
+
+
+
+
+// lastName.addEventListener('blur', (e)=>{
+//   lastName = e.target.value;
+//   lastName? errorLName.textContent = '' : errorLName.textContent = 'Veuillez entrer votre nom';
+//   lastName = lastName.toLowerCase();
+  
+  
+// })
+// address.addEventListener('blur', (e)=>{
+//   const errorAddress = document.getElementById('addressErrorMsg');
+//   address = e.target.value;
+//   address? errorAddress.textContent = '' : errorAddress.textContent = 'Veuillez entrer votre adresse';
+//   address = address.toLowerCase();
+// })
+// const errorCity = document.getElementById('cityErrorMsg');
+// city.addEventListener('blur', (e)=>{
+//   city = e.target.value;
+//   city? errorCity.textContent = '' : errorCity.textContent = 'Veuillez entrer votre ville';
+//   city = city.toLowerCase();
+// })
+// // var emailReg = new RegExp(/^([w-.]+)@((?:[w]+.)+)([a-zA-Z]{2,4})/i);
+// // // var valid = emailReg.test(email);
+// const errorEmail = document.getElementById('emailErrorMsg');
+// email.addEventListener('blur', (e)=>{
+//   email = e.target.value;
+//   email? errorEmail.textContent = '' : errorEmail.textContent = 'Veuillez entrer votre email';
+//   validerEmail();
+//   re.test(String(email).toLowerCase());
+//   console.log(re);
+  // email = email.toLowerCase();
+  
+  // if(valid){
+    //   errorEmail.textContent = "";
+    // }else{
+      //   errorEmail.textContent = "adresse email invalid";
+      // }
       
-            //       getStorage.push(kanap);
-      
-            //     }
-            //     localStorage.setItem("kanap", JSON.stringify(getStorage));
-      
-            //   } else {
-      
-      
-            //     kanapStorage.push(kanap);
-            //     localStorage.setItem("kanap", JSON.stringify(kanapStorage));
-            //   }
-      
-            // }else{
-            //   alert('Veuillez choisir une couleur et une quantité');
-            // }
+       
+    // })
 
 
+    //validation de commande
 
-
-
-
-
-
-
-
-            // let price = document.querySelector('.cart__item__content__titlePrice p');
-            // price.innerHTML =  `${quantity * parseFloat(kanap.price)} €`;
-          
-          
-          }
-          
-          // let kanapQuantity = document.querySelectorAll('.itemQuantity');
-          //   for (quantity of kanapQuantity){
-            //     // console.log(quantity.value);
-            //     quantity.addEventListener('change', ()=>{
-              //     let price = document.querySelector('.cart__item__content__titlePrice p');
-              //     let kanapPrice = (parseInt(quantity) * parseFloat(kanap.price) );
-              //     price.innerHTML =  `${quantity * kanapPrice } €`;
-//     });
-//   };
-//   ;
-// let price = document.querySelectorAll('.cart__item__content__titlePrice p');
-// price.innerHTML =  `${kanap.quantity * parseFloat(kanap.price)} €`;
-// console.log(price);
+   
+    btnOrder.addEventListener('submit', handleFormSubmit);
+    handleFormSubmit(e){
+      e.preventDefault();
+      fetch("http://localhost:3000/api/request", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json', 
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({value: document.getElementById("value").value})
+      })
+      .then(function(res) {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then(function(value) {
+          document
+            .getElementById("result")
+            .innerText = value.postData.text;
+      });
+    }
