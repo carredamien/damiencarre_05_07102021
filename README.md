@@ -1,4 +1,4 @@
-[image du projet 5 : kanap](./kanap.jpg)
+![image du projet 5 : kanap](./kanap.jpg)
 
 # Kanap #
 
