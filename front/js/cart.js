@@ -1,45 +1,38 @@
 //Récupération du localstorage
 let kanapStorage = JSON.parse(localStorage.getItem("kanap")); //récupération du localstorage
-// console.log(kanapStorage);
 let price ="document.querySelector('.cart__item__content__titlePrice p')";
- //gestion du tarif selon les quantité
 
-//  function UpdateQuantity(e, id){
-//      console.log(e.target.value);
-//      console.log(id);
-//   // let itemQuantitys = document.querySelectorAll('.itemQuantity');
-//   // for(let itemQuantity of itemQuantitys){
-//   // }
-
-// }
 function getCart(){  //fonction qui affiche le panier
-  for(kanap of kanapStorage){ 
-    
-    const cartItems = document.getElementById('cart__items');
-    const cartArticle = document.createElement('article');
-    cartArticle.classList.add('cart__item');
+  if (kanapStorage){
 
-    
-    cartItems.appendChild(cartArticle);
-    cartArticle.setAttribute('data-id', kanap.id);
-    cartArticle.innerHTML =  `
-    <div class="cart__item__img">
-      <img src="${kanap.image}" alt="${kanap.altTxt}">
-    </div>
-    <div class="cart__item__content">
-      <div class="cart__item__content__titlePrice">
-        <h2>${kanap.name}</h2>
-        <p>${kanap.price * kanap.quantity} €</p>
+    for(kanap of kanapStorage){ 
+      
+      const cartItems = document.getElementById('cart__items');
+      const cartArticle = document.createElement('article');
+      cartArticle.classList.add('cart__item');
+  
+      
+      cartItems.appendChild(cartArticle);
+      cartArticle.setAttribute('data-id', kanap.id);
+      cartArticle.innerHTML =  `
+      <div class="cart__item__img">
+        <img src="${kanap.image}" alt="${kanap.altTxt}">
       </div>
-    <div class="cart__item__content__settings">
-    <div class="cart__item__content__settings__quantity">
-      <p>Qté : </p>
-      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${kanap.quantity}" onChange="handleUpdateKanapQuantity(event, '${kanap.id}')">
-    </div>
-      <div class="cart__item__content__settings__delete">
-        <p class="deleteItem" onClick= "deleteProduct('${kanap.id}')">Supprimer</p>
+      <div class="cart__item__content">
+        <div class="cart__item__content__titlePrice">
+          <h2>${kanap.name}</h2>
+          <p>${kanap.price * kanap.quantity} €</p>
+        </div>
+      <div class="cart__item__content__settings">
+      <div class="cart__item__content__settings__quantity">
+        <p>Qté : </p>
+        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${kanap.quantity}" onChange="handleUpdateKanapQuantity(event, '${kanap.id}')">
       </div>
-    </div>`
+        <div class="cart__item__content__settings__delete">
+          <p class="deleteItem" onClick= "deleteProduct('${kanap.id}')">Supprimer</p>
+        </div>
+      </div>`
+    }
   }
 }
 getCart();
@@ -50,7 +43,7 @@ function handleUpdateKanapQuantity(e, productId){
   for(kanap of kanapStorage){ 
     if (kanap.id === productId) {
       kanap.quantity = e.target.value;
-      }
+    }
   }
   localStorage.setItem("kanap", JSON.stringify(kanapStorage));
   location.reload();
@@ -59,30 +52,48 @@ function handleUpdateKanapQuantity(e, productId){
 //total du panier
 
 function getTotalCart(){
-let kanapQuantity = kanapStorage.map(kanap =>{
-  return parseInt(kanap.quantity);
-})
+if(kanapStorage){
 
-let numberProductsCaddy = kanapQuantity.reduce((acc, kanap)=> {
-  return acc + kanap
-},0);
-
-let totalKanapPrice = kanapStorage.map(kanap =>{
-  return parseFloat(kanap.price) * parseInt(kanap.quantity);
-})
-let totalPriceCaddy = totalKanapPrice.reduce((acc, kanap)=> {
-  return acc + kanap
-},0);
-
-let totalPrice = document.querySelector('.cart__price p');
-totalPrice.innerHTML = `<p>Total (<span id="totalQuantity" value="">${numberProductsCaddy}</span> articles) : <span id="totalPrice">${totalPriceCaddy}</span> €</p>`;
+  let kanapQuantity = kanapStorage.map(kanap =>{
+    return parseInt(kanap.quantity);
+  })
+  
+  let numberProductsCaddy = kanapQuantity.reduce((acc, kanap)=> {
+    return acc + kanap
+  },0);
+  
+  let totalKanapPrice = kanapStorage.map(kanap =>{
+    return parseFloat(kanap.price) * parseInt(kanap.quantity);
+  })
+  let totalPriceCaddy = totalKanapPrice.reduce((acc, kanap)=> {
+    return acc + kanap
+  },0);
+  
+  let totalPrice = document.querySelector('.cart__price p');
+  totalPrice.innerHTML = `<p>Total (<span id="totalQuantity" value="">${numberProductsCaddy}</span> articles) : <span id="totalPrice">${totalPriceCaddy}</span> €</p>`;
+  
+}else{
+  let totalPrice = document.querySelector('.cart__price p');
+  totalPrice.innerHTML = `<p>Total (<span id="totalQuantity" value="">0</span> article) : <span id="totalPrice">0</span> €</p>`;
+  }
 }
 getTotalCart();
 
-function deleteProduct(){
+let deleteItem = document.querySelector('.deleteItem');
+function deleteProduct(productId){
+
+    const deleteKanap = kanapStorage.filter(
+      (x) => x.id === productId);
+      console.log(deleteKanap.splice(0,1));
+      deleteKanap.splice(0,1);
+        
+  localStorage.setItem("kanap", JSON.stringify(kanapStorage));
+  location.reload();
 
 
 }
+
+
 
 
 //formulaire 
