@@ -10,8 +10,6 @@ function getCart(){  //fonction qui affiche le panier
       const cartItems = document.getElementById('cart__items');
       const cartArticle = document.createElement('article');
       cartArticle.classList.add('cart__item');
-  
-      
       cartItems.appendChild(cartArticle);
       cartArticle.setAttribute('data-id', kanap.id);
       cartArticle.innerHTML =  `
@@ -79,18 +77,24 @@ if(kanapStorage){
 }
 getTotalCart();
 
-let deleteItem = document.querySelector('.deleteItem');
+// let deleteItem = document.querySelector('.deleteItem');
 function deleteProduct(productId){
-
+  if(productId){
     const deleteKanap = kanapStorage.filter(
       (x) => x.id === productId);
-      console.log(deleteKanap.splice(0,1));
-      deleteKanap.splice(0,1);
-        
-  localStorage.setItem("kanap", JSON.stringify(kanapStorage));
-  location.reload();
+      // deleteKanap.splice(0.1);
+      console.log(deleteKanap);
+delete deleteKanap[0]
 
 
+
+
+
+localStorage.setItem("kanap", JSON.stringify(deleteKanap));
+location.reload();
+
+  }
+   
 }
 
 
