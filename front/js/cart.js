@@ -14,10 +14,11 @@ let price ="document.querySelector('.cart__item__content__titlePrice p')";
 // }
 function getCart(){  //fonction qui affiche le panier
   for(kanap of kanapStorage){ 
+    
     const cartItems = document.getElementById('cart__items');
     const cartArticle = document.createElement('article');
     cartArticle.classList.add('cart__item');
-    // let kanapTotal = parseInt(kanap.quantity) * parseFloat(price);
+
     
     cartItems.appendChild(cartArticle);
     cartArticle.setAttribute('data-id', kanap.id);
@@ -28,7 +29,7 @@ function getCart(){  //fonction qui affiche le panier
     <div class="cart__item__content">
       <div class="cart__item__content__titlePrice">
         <h2>${kanap.name}</h2>
-        <p>${kanap.price} €</p>
+        <p>${kanap.price * kanap.quantity} €</p>
       </div>
     <div class="cart__item__content__settings">
     <div class="cart__item__content__settings__quantity">
@@ -40,77 +41,48 @@ function getCart(){  //fonction qui affiche le panier
       </div>
     </div>`
   }
-
 }
 getCart();
 
-// gestion du tarif selon les quantité
+// gestion du tarif selon les quantités
 
 function handleUpdateKanapQuantity(e, productId){
-
-   console.log(productId);
-   let quantity = e.target.value;
-   let price = document.querySelector('.cart__item__content__titlePrice p');
-   price.innerHTML =  `${quantity * parseFloat(kanap.price)} €`;
- 
-  
+  for(kanap of kanapStorage){ 
+    if (kanap.id === productId) {
+      kanap.quantity = e.target.value;
+      }
+  }
+  localStorage.setItem("kanap", JSON.stringify(kanapStorage));
+  location.reload();
 }
 
+//total du panier
 
-///////////////////////////////////
-// const itemQuantity = document.querySelectorAll('.itemQuantity');
-// for (let item of itemQuantity){
-//   item.addEventListener('change', handleUpdateQuantity);
-// }
-// function handleUpdateQuantity(){
- 
-//   let quantity = this.value;// je récupère la quantité 
-//   let titlePrice = document.querySelector('.cart__item__content__titlePrice p');
-//  let kPrice = (parseInt(quantity)* parseFloat(kanap.price));
-//  titlePrice.innerHTML = `<p>${kPrice} €</p>`;
-// }
+function getTotalCart(){
+let kanapQuantity = kanapStorage.map(kanap =>{
+  return parseInt(kanap.quantity);
+})
 
-///////////////////////////
-// const itemQuantity = document.querySelectorAll('.itemQuantity');
-// for (let item of itemQuantity){
-//   item.addEventListener('change', handleUpdateQuantity(kanap.id));
-// }
-  
-//   function handleUpdateQuantity(){
-//     console.log(this.value);
-    
-   
-    // console.log(price);
-// console.log(kQuantity);
-//  let kPrice = (parseInt(this.value) * parseFloat(price));
+let numberProductsCaddy = kanapQuantity.reduce((acc, kanap)=> {
+  return acc + kanap
+},0);
 
-//  let titlePrice = document.querySelector('cart__item__content__titlePrice p');
-//  console.log(titlePrice);
-//  titlePrice.innerHTML = `<p>${kPrice} €</p>`;
-// }
+let totalKanapPrice = kanapStorage.map(kanap =>{
+  return parseFloat(kanap.price) * parseInt(kanap.quantity);
+})
+let totalPriceCaddy = totalKanapPrice.reduce((acc, kanap)=> {
+  return acc + kanap
+},0);
+
+let totalPrice = document.querySelector('.cart__price p');
+totalPrice.innerHTML = `<p>Total (<span id="totalQuantity" value="">${numberProductsCaddy}</span> articles) : <span id="totalPrice">${totalPriceCaddy}</span> €</p>`;
+}
+getTotalCart();
+
+function deleteProduct(){
 
 
-// function updateQuantity(e, id){
-// let itemQuantity = document.querySelectorAll('.itemQuantity');
-//   for (item of itemQuantity){
-//     let quantity = parseInt(e.target.value);
-//     let idQuantity = id;
-//     console.log( idQuantity, kanap.id);  //pourquoi les id sont différents
-
-//     if (idQuantity == kanap.id && quantity != kanap.quantity){
-      
-//       kanapPrice = (quantity * kanap.price);
-      
-//       let priceP = document.querySelector('.cart__item__content__titlePrice p');
-      
-//       // for(priceP of pricePs){
-//         priceP.innerHTML = `<p>${kanapPrice} €</p>`
-//       // }
-//     }
-//   }
-
-
-// }
+}
 
 
 //formulaire 
@@ -260,25 +232,25 @@ inputEmail.value.toLowerCase();
     //validation de commande
 
    
-    btnOrder.addEventListener('submit', handleFormSubmit);
-    handleFormSubmit(e){
-      e.preventDefault();
-      fetch("http://localhost:3000/api/request", {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json', 
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({value: document.getElementById("value").value})
-      })
-      .then(function(res) {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then(function(value) {
-          document
-            .getElementById("result")
-            .innerText = value.postData.text;
-      });
-    }
+    // btnOrder.addEventListener('submit', handleFormSubmit);
+    // handleFormSubmit(e){
+    //   e.preventDefault();
+    //   fetch("http://localhost:3000/api/products/order", {
+    //     method: "POST",
+    //     headers: {
+    //       'Accept': 'application/json', 
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({value: document.getElementById("value").value})
+    //   })
+    //   .then(function(res) {
+    //     if (res.ok) {
+    //       return res.json();
+    //     }
+    //   })
+    //   .then(function(value) {
+    //       document
+    //         .getElementById("result")
+    //         .innerText = value.postData.text;
+    //   });
+    // }
