@@ -24,10 +24,10 @@ function getCart(){  //fonction qui affiche le panier
       <div class="cart__item__content__settings">
       <div class="cart__item__content__settings__quantity">
         <p>Qté : </p>
-        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${kanap.quantity}" onChange="handleUpdateKanapQuantity(event, '${kanap.id}')">
+        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${kanap.quantity}" onChange="handleUpdateKanapQuantity(event, '${kanap.id}', '${kanap.color}')">
       </div>
         <div class="cart__item__content__settings__delete">
-          <p class="deleteItem" onClick= "deleteProduct('${kanap.id}')">Supprimer</p>
+          <p class="deleteItem" onClick= "deleteProduct('${kanap.id}', '${kanap.color}')">Supprimer</p>
         </div>
       </div>`
     }
@@ -37,9 +37,9 @@ getCart();
 
 // gestion du tarif selon les quantités
 
-function handleUpdateKanapQuantity(e, productId){
+function handleUpdateKanapQuantity(e, productId, productColor){
   for(kanap of kanapStorage){ 
-    if (kanap.id === productId) {
+    if (kanap.id === productId && productColor == kanap.color) {
       kanap.quantity = e.target.value;
     }
   }
@@ -77,42 +77,69 @@ if(kanapStorage){
 }
 getTotalCart();
 
-// let deleteItem = document.querySelector('.deleteItem');
-function deleteProduct(productId){
-  if(productId){
-    const deleteKanap = kanapStorage.filter(
-      (x) => x.id === productId);
-      // deleteKanap.splice(0.1);
-      console.log(deleteKanap);
-delete deleteKanap[0]
+let deleteItem = document.querySelector('.deleteItem');
+function deleteProduct(productId, productColor){
+  for(kanap of kanapStorage){ 
+    if (kanap.id === productId && productColor == kanap.color) { // je filtre par id et couleurs
 
-
-
-
-
-localStorage.setItem("kanap", JSON.stringify(deleteKanap));
-location.reload();
-
-  }
-   
-}
-
-
-
-
-//formulaire 
-
-let form = document.querySelector(".cart__order__form");
-let firstName = document.getElementById("firstName");
-let lastName = document.getElementById("lastName");
-let address = document.getElementById("address");
-let city = document.getElementById("city");
-let email = document.getElementById("email");
-let btnOrder = document.getElementById("order");
-let formContact = [];
-const errorFName = document.getElementById('firstNameErrorMsg');
-const errorLName = document.getElementById('lastNameErrorMsg');
-const errorAddress = document.getElementById('addressErrorMsg');
+  let indexOfKanap = (kanapStorage.indexOf(kanap)); // cela me renvoi un kanap, je récupére son index 
+ kanapStorage.splice(indexOfKanap,1);
+  
+  localStorage.setItem("kanap", JSON.stringify(kanapStorage));
+  location.reload();
+    }
+    // if (kanap.quantity = 0){
+      //  let deleteKanape =  kanap.quantity;
+      // delete kanap[0];
+      // }
+    }
+    // for (let product of kanapStorage){
+      //   console.log(kanap.color);
+      //   if(productId == kanap.id && productColor == kanap.color){
+        //     // product.splice(0,1)
+        
+        //   }
+        // }
+        //  let deleteKanap = kanapStorage.map(kanap =>{
+          //    console.log(deleteKanap);
+          // return parseInt(kanap.quantity);
+          //  })
+          // 
+          
+          // kanapStorage.find
+          //     console.log(productColor);
+          //     const deleteKanap = kanapStorage.filter(
+            //       (x) => x.id === productId);
+            //       // deleteKanap.splice(0,1);
+            //       console.log(deleteKanap);
+            //       delete deleteKanap[0]
+            
+            
+            
+            
+            
+            // }
+            
+          }
+          
+        
+        //   localStorage.setItem("kanap", JSON.stringify(kanapStorage));
+        // location.reload();
+          
+          
+          //formulaire 
+          
+          let form = document.querySelector(".cart__order__form");
+          let firstName = document.getElementById("firstName");
+          let lastName = document.getElementById("lastName");
+          let address = document.getElementById("address");
+          let city = document.getElementById("city");
+          let email = document.getElementById("email");
+          let btnOrder = document.getElementById("order");
+          let formContact = [];
+          const errorFName = document.getElementById('firstNameErrorMsg');
+          const errorLName = document.getElementById('lastNameErrorMsg');
+          const errorAddress = document.getElementById('addressErrorMsg');
 const errorCity = document.getElementById('cityErrorMsg');
 const errorEmail = document.getElementById('emailErrorMsg');
 
@@ -194,54 +221,6 @@ const validEmail = function(inputEmail){
     }
 inputEmail.value.toLowerCase();
 };
-
-  
-
-
-
-
-
-
-
-
-// lastName.addEventListener('blur', (e)=>{
-//   lastName = e.target.value;
-//   lastName? errorLName.textContent = '' : errorLName.textContent = 'Veuillez entrer votre nom';
-//   lastName = lastName.toLowerCase();
-  
-  
-// })
-// address.addEventListener('blur', (e)=>{
-//   const errorAddress = document.getElementById('addressErrorMsg');
-//   address = e.target.value;
-//   address? errorAddress.textContent = '' : errorAddress.textContent = 'Veuillez entrer votre adresse';
-//   address = address.toLowerCase();
-// })
-// const errorCity = document.getElementById('cityErrorMsg');
-// city.addEventListener('blur', (e)=>{
-//   city = e.target.value;
-//   city? errorCity.textContent = '' : errorCity.textContent = 'Veuillez entrer votre ville';
-//   city = city.toLowerCase();
-// })
-// // var emailReg = new RegExp(/^([w-.]+)@((?:[w]+.)+)([a-zA-Z]{2,4})/i);
-// // // var valid = emailReg.test(email);
-// const errorEmail = document.getElementById('emailErrorMsg');
-// email.addEventListener('blur', (e)=>{
-//   email = e.target.value;
-//   email? errorEmail.textContent = '' : errorEmail.textContent = 'Veuillez entrer votre email';
-//   validerEmail();
-//   re.test(String(email).toLowerCase());
-//   console.log(re);
-  // email = email.toLowerCase();
-  
-  // if(valid){
-    //   errorEmail.textContent = "";
-    // }else{
-      //   errorEmail.textContent = "adresse email invalid";
-      // }
-      
-       
-    // })
 
 
     //validation de commande
