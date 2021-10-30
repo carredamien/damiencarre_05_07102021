@@ -1,43 +1,43 @@
 //APPROCHE MODULES
 let app = {
-  //connect to api and variables init
-  url : `http://localhost:3000/api/products`, 
-  products : "",
-  
-  init: function(){     
-    app.getPosts();     
+
+  url: `http://localhost:3000/api/products`, //Initialisation des variables
+  products: "",
+
+  init: function () { // fonction init pour démarrer les objets
+    app.getPosts();
   },
-  //connect API and promise
-  getPosts: function(){
-    fetch(app.url)
-    .then(function(res){
-      if (res) {
-        return res.json();
-      }
-    })
-    .then(async function(value) {
-      app.products = await value;
-      //displayed posts
-      app.displayPost(app.products);
-    })
-    .catch(function(err) {
-      //displayed error
-      app.displayError();
-      
-    })
+
+  getPosts: function () { //fonction pour récupérer les produits de l'api
+    fetch(app.url) //ici je me connecte a l'api
+      .then(function (res) { // je reçois la réponse 
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then(async function (value) { //je récupére la promesse
+        app.products = await value;
+        //displayed posts
+        app.displayPost(app.products); // je lance la fonction qui affiche les produits
+      })
+      .catch(function (err) { // s'il y a une erreur, je lance une fonction qui prévient l'utilisateur
+        //displayed error
+        app.displayError();
+
+      })
   },
-  
-  // function displayed posts
-  displayPost: function(){
-    if (app.products){
-      for(product of app.products){
+
+
+  displayPost: function () { // function pour afficher les produits
+    if (app.products) {
+      for (product of app.products) {
         let items = document.querySelector('#items');
         let a = document.createElement('a');
         items.appendChild(a);
         let article = document.createElement('article');
         a.appendChild(article);
         let articleImg = document.createElement('img');
-        articleImg.src= product.imageUrl;
+        articleImg.src = product.imageUrl;
         article.appendChild(articleImg);
         let articleTitle = document.createElement('h3');
         article.appendChild(articleTitle);
@@ -48,30 +48,23 @@ let app = {
         articleTitle.innerHTML = product.name;
         articleP.innerHTML = product.description;
       }
-      
-      const searchParams = new URLSearchParams(location.search);
+
+      const searchParams = new URLSearchParams(location.search); // je redirige sur la fiche produit selon l'id
       searchParams.get("id");
-      if(searchParams.has('id')){
+      if (searchParams.has('id')) {
         location.pathname = `/front/html/product.html`;
-      }
-      else{
-        window.location.href;
+      } else {
+        window.location.href; // sinon je reste sur la page d'accueil
       }
     }
-  } ,
+  },
 
-  //function displayed error
-  displayError: function(){
+  displayError: function () { //fonction d'affichage d'erreur
     let titleH2 = document.querySelector('.limitedWidthBlock .titles h2');
-    titleH2.innerHTML = "Nous sommes désolés, une erreur est survenue" ;
-    
+    titleH2.innerHTML = "Nous sommes désolés, une erreur est survenue";
+
   }
 
 };
-//loading
-document.addEventListener('DOMContentLoaded', app.init);
 
-            
-            
-            
-        
+document.addEventListener('DOMContentLoaded', app.init); //démarrage de la fonction init une fois le dom chargé

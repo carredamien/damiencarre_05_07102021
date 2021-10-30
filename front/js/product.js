@@ -1,31 +1,30 @@
-let searchParams = new URLSearchParams(location.search);
+let searchParams = new URLSearchParams(location.search);  //mise en place des variables
 let paramsId = searchParams.get("id");
 let urlId = `http://localhost:3000/api/products/${paramsId}`;
 let product = "";
 
 
-//connect API and fetch post
-function getPostId() {
+function getPostId() {// connection à l'api
   fetch(urlId)
     .then(function (res) {
       if (res) {
         return res.json();
       }
     })
-    .then(async function (value) {
+    .then(async function (value) { //récupération de la requête
       product = await value;
       if (product) {
         getPost(product);
       }
     })
-    .catch(function (err) {
+    .catch(function (err) {  //gestion des erreurs
       getError();
     })
 };
 getPostId();
 
-//displayed product
-function getPost(product) {
+
+function getPost(product) {    //affichage du produit demandé
 
   let item = document.querySelector('.item');
   let article = document.createElement('article');
@@ -62,7 +61,7 @@ function getPost(product) {
       </div>`;
 
 
-  function addToCart() {
+  function addToCart() {  //fonction d'ajout au panier 
 
     const colors = document.querySelector('#colors');
     const quantity = document.querySelector('#quantity');
@@ -75,7 +74,7 @@ function getPost(product) {
     })
 
 
-    function addToStorage() {
+    function addToStorage() { //fonction d'ajout au stockage
       let kanapStorage = [];
       let kanap = {
         id: paramsId,
@@ -87,7 +86,7 @@ function getPost(product) {
         quantity: quantity.value
       };
 
-      //LOCALSTORAGE
+      // stockage du panier avec la fonction LOCALSTORAGE
 
       // si la couleur et les quantités sont remplies, j'ajoute au localstorage
       // let setStorage = localStorage.setItem('kanap', kanap);
@@ -128,8 +127,8 @@ function getPost(product) {
 };
 
 
-//displayed error
-function getError() {
+
+function getError() {  //fonction pour les erreurs
   let item = document.querySelector('.item');
   let article = document.createElement('article');
   item.appendChild(article);
