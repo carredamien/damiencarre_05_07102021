@@ -212,22 +212,36 @@ if (cartAndFormContainer) {
   }
   orderForm();
 
+  const product = [];
   function cartValidate() {
     for (kanap of kanapStorage) {
-      let product = [];
-      product.push(kanap.id)
-      console.log(product);
+      let id = kanap.id;
+      
       //  product.push(kanap)
       
-      return product
+      product.push(id);
+      console.log(product);
+      // return product;
     }
-
+    
+    //   for (let i = 0; i < kanapStorage.length; i ++ ){
+    //     // console.log(i);
+    //     console.log(kanapStorage[i]);
+    //     let ids = kanapStorage[i].id;
+    //     let products = []
+    //     products.push(ids)
+    //  console.log(products);
+    //     return products
+        
+    //     // console.log(product);
+    //   }
   }
 
-  // console.log(cartValidate());
   let contact = orderForm();
   // console.log(contact);
   products = cartValidate();
+
+ 
   // let order = {
   //   'contact': orderForm(),
   //   'produits': cartValidate()
@@ -249,16 +263,19 @@ if (cartAndFormContainer) {
       })
       .then(function (res) {
         if (res.ok) {
-          // console.log(res);
+          console.log(res);
           return res.json();
         }
       })
       .then(async function (contact) {
         if (contact){
-          location.href = `confirmation.html`;
+          // location.href = `confirmation.html`;
           let orderId = contact.orderId;
+          console.log(contact);
+          console.log( orderId);
           let confirmation = document.getElementById('orderId');
           // confirmation.innerHtml = `${orderId}`;
+          // localStorage.clear();
   
           // orderId
         }
