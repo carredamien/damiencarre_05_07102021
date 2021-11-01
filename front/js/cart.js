@@ -207,7 +207,7 @@ if (cartAndFormContainer) {
       email: JSON.parse(sessionStorage.getItem('Email')),
     }
     if (firstName != null && lastName != null && address != null && city != null && email != null) {
-      return formContact;
+    return formContact;
     }
   }
   orderForm();
@@ -222,16 +222,19 @@ if (cartAndFormContainer) {
       //   'quantity': kanap.quantity,
       //   'color': kanap.color
       // }
-      let produits = kanapStorage;
-      return produits;
+      let product = kanapStorage;
+      return product;
     }
 
   }
 
-  let order = {
-    'contact': orderForm(),
-    'produits': cartValidate()
-  };
+  let contact = orderForm();
+  console.log(contact);
+  products = cartValidate();
+  // let order = {
+  //   'contact': orderForm(),
+  //   'produits': cartValidate()
+  // };
 
   let btnOrder = document.getElementById("order");
   btnOrder.addEventListener('click', handleFormSubmit);
@@ -245,24 +248,22 @@ if (cartAndFormContainer) {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          value: order
-        })
+        body: JSON.stringify({contact, products})
       })
       .then(function (res) {
         if (res.ok) {
+          console.log(res);
           return res.json();
         }
       })
-      .then(function (value) {
-        console.log(value);
-        console.log('ok');
-        if (order){
+      .then(async function (contact, products) {
+    
+        if (contact && products){
           location.pathname = `/front/html/confirmation.html`;
         }
       })
       .catch(function (err) { // s'il y a une erreur, je lance une fonction qui prévient l'utilisateur
-        document.querySelector('.confirmation p').innerHTML = "Une erreur est survenue";
+        alert("Une erreur est survenue");
 
       })
   }
