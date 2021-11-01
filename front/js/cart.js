@@ -214,22 +214,19 @@ if (cartAndFormContainer) {
 
   function cartValidate() {
     for (kanap of kanapStorage) {
-      // let produits = {
-      //   'id': kanap.id,
-      //   'name': kanap.name,
-      //   'image': kanap.image,
-      //   'price': kanap.price,
-      //   'quantity': kanap.quantity,
-      //   'color': kanap.color
-      // }
-      let product = kanapStorage;
-      return product;
+      let product = [];
+      product.push(kanap.id)
+      console.log(product);
+      //  product.push(kanap)
+      
+      return product
     }
 
   }
 
+  // console.log(cartValidate());
   let contact = orderForm();
-  console.log(contact);
+  // console.log(contact);
   products = cartValidate();
   // let order = {
   //   'contact': orderForm(),
@@ -252,18 +249,23 @@ if (cartAndFormContainer) {
       })
       .then(function (res) {
         if (res.ok) {
-          console.log(res);
+          // console.log(res);
           return res.json();
         }
       })
-      .then(async function (contact, products) {
-    
-        if (contact && products){
-          location.pathname = `/front/html/confirmation.html`;
+      .then(async function (contact) {
+        if (contact){
+          location.href = `confirmation.html`;
+          let orderId = contact.orderId;
+          let confirmation = document.getElementById('orderId');
+          // confirmation.innerHtml = `${orderId}`;
+  
+          // orderId
         }
       })
       .catch(function (err) { // s'il y a une erreur, je lance une fonction qui prévient l'utilisateur
         alert("Une erreur est survenue");
+        
 
       })
   }
