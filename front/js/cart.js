@@ -213,50 +213,40 @@ if (kanapStorage) {
       city: JSON.parse(sessionStorage.getItem('Ville')),
       email: JSON.parse(sessionStorage.getItem('Email')),
     }
-    if (formContact.firstName != null && formContact.lastName != null && formContact.address != null && formContact.city != null && formContact.email != null) {
+    if (formContact.firstName != undefined && formContact.lastName != undefined && formContact.address != undefined && formContact.city != undefined && formContact.email != undefined) {
       return formContact;
     }
   }
   orderForm();
-console.log(orderForm());
+
   const product = [];
 
   function cartValidate() {
     for (kanap of kanapStorage) {
       let id = kanap.id;
       product.push(id);
-      console.log(product); //pourquoi j'ai 2 tableaux qui apparaissent en console?===================================
+      // console.log(product); //pourquoi j'ai 2 tableaux qui apparaissent en console?===================================
     }
     return product;
   }
   products = cartValidate();
-}
-let contact = orderForm();
+  let contact = orderForm();
 
 
 
-if (contact != '' && products != '')  { // si le formulaire contient des produits et que le formulaire n'est pas vide
-  let btnOrder = document.getElementById("order");
-  if (btnOrder) {
-    btnOrder.addEventListener('click', handleFormSubmit);
+
+  if (contact != '' && products != '') { // si le formulaire contient des produits et que le formulaire n'est pas vide
+    let btnOrder = document.getElementById("order");
+    if (btnOrder) {
+      btnOrder.addEventListener('click', handleFormSubmit);
+    }
+  } else { // sinon je raffraichi la page
+    Location.href
   }
-}
-else{  // sinon je raffraichi la page
-  Location.href
-}
 
 async function handleFormSubmit(e) {
 
   e.preventDefault();
-  let urlId = 15;
-  // let orderId =  window.location;
-  const searchParams = new URLSearchParams(location.search);
-  searchParams.get(`${urlId}`);
-  location.pathname = `/front/html/confirmation.html?id=${urlId}`;
-
-
-
-  
 
   await fetch("http://localhost:3000/api/products/order", {
       method: "POST",
@@ -271,30 +261,18 @@ async function handleFormSubmit(e) {
     })
     .then(function (res) {
       if (res.ok) {
-        // console.log(res);
+
         return res.json();
       }
     })
 
     .then(function (value) {
-      // let orderId = value.orderId;
-      // let urlId = `?id=${orderId}`;
-      // console.log(orderId);
-      // const searchParams = new URLSearchParams(location.search);
-      // console.log(window.location);
-      // searchParams.get(urlId);
+      let orderId = value.orderId; //je récupère le numéro de commande 
+
+      const searchParams = new URLSearchParams(location.search);
       console.log(searchParams);
-      // if (searchParams.has(orderId)){
-      // a.href = `?id=${product._id}`;
-      // location.pathname = `front/html/confirmation.html/${urlId}`;
-      // }
-
-
-      // let orderId = document.getElementById('orderId');
-      // console.log(orderNumber);
-      // orderId.innerHtml = `${orderNumber}`;
-      // localStorage.clear();
-
+      searchParams.get(`${order}`);
+      location.replace(`/front/html/confirmation.html?order=${orderId}`);
 
     })
     .catch(function (err) { // s'il y a une erreur, je lance une fonction qui prévient l'utilisateur
@@ -303,4 +281,5 @@ async function handleFormSubmit(e) {
 
 
     })
+}
 }
