@@ -36,7 +36,6 @@ if (cartAndFormContainer) {
   }
   getCart();
 
-
   function handleUpdateKanapQuantity(e, productId, productColor) { // gestion du tarif selon les quantités
     for (kanap of kanapStorage) {
       if (kanap.id === productId && productColor == kanap.color) {
@@ -46,66 +45,70 @@ if (cartAndFormContainer) {
     localStorage.setItem("kanap", JSON.stringify(kanapStorage));
     location.reload();
   }
+}
 
-  function getTotalCart() { //total du panier
-    if (kanapStorage) {
+function getTotalCart() { //total du panier
+  if (kanapStorage) {
 
-      let kanapQuantity = kanapStorage.map(kanap => {
-        return parseInt(kanap.quantity);
-      })
+    let kanapQuantity = kanapStorage.map(kanap => {
+      return parseInt(kanap.quantity);
+    })
 
-      let numberProductsCaddy = kanapQuantity.reduce((acc, kanap) => {
-        return acc + kanap
-      }, 0);
+    let numberProductsCaddy = kanapQuantity.reduce((acc, kanap) => {
+      return acc + kanap
+    }, 0);
 
-      let totalKanapPrice = kanapStorage.map(kanap => {
-        return parseFloat(kanap.price) * parseInt(kanap.quantity);
-      })
-      let totalPriceCaddy = totalKanapPrice.reduce((acc, kanap) => {
-        return acc + kanap
-      }, 0);
-
-      let totalPrice = document.querySelector('.cart__price p');
+    let totalKanapPrice = kanapStorage.map(kanap => {
+      return parseFloat(kanap.price) * parseInt(kanap.quantity);
+    })
+    let totalPriceCaddy = totalKanapPrice.reduce((acc, kanap) => {
+      return acc + kanap
+    }, 0);
+    let totalPrice = document.querySelector('.cart__price p');
+    if (totalPrice) {
       totalPrice.innerHTML = `<p>Total (<span id="totalQuantity" value="">${numberProductsCaddy}</span> articles) : <span id="totalPrice">${totalPriceCaddy}</span> €</p>`;
-
-    } else {
-      let totalPrice = document.querySelector('.cart__price p');
+    }
+  } else {
+    let totalPrice = document.querySelector('.cart__price p');
+    if (totalPrice) {
       totalPrice.innerHTML = `<p>Total (<span id="totalQuantity" value="">0</span> article) : <span id="totalPrice">0</span> €</p>`;
     }
   }
-  getTotalCart();
+}
+getTotalCart();
 
-  let deleteItem = document.querySelector('.deleteItem'); //fontion pouur supprimer un produit
-  function deleteProduct(productId, productColor) {
-    for (kanap of kanapStorage) {
-      if (kanap.id === productId && productColor == kanap.color) { // je filtre par id et couleurs
+let deleteItem = document.querySelector('.deleteItem'); //fontion pouur supprimer un produit
+function deleteProduct(productId, productColor) {
+  for (kanap of kanapStorage) {
+    if (kanap.id === productId && productColor == kanap.color) { // je filtre par id et couleurs
 
-        let indexOfKanap = (kanapStorage.indexOf(kanap)); // cela me renvoi un kanap, je récupére son index 
-        kanapStorage.splice(indexOfKanap, 1);
+      let indexOfKanap = (kanapStorage.indexOf(kanap)); // cela me renvoi un kanap, je récupére son index 
+      kanapStorage.splice(indexOfKanap, 1);
 
-        localStorage.setItem("kanap", JSON.stringify(kanapStorage));
-        location.reload();
-      }
-
+      localStorage.setItem("kanap", JSON.stringify(kanapStorage));
+      location.reload();
     }
 
   }
 
-  //formulaire 
+}
 
-  let form = document.querySelector(".cart__order__form");
-  let firstName = document.getElementById("firstName");
-  let lastName = document.getElementById("lastName");
-  let address = document.getElementById("address");
-  let city = document.getElementById("city");
-  let email = document.getElementById("email");
-  const errorFName = document.getElementById('firstNameErrorMsg');
-  const errorLName = document.getElementById('lastNameErrorMsg');
-  const errorAddress = document.getElementById('addressErrorMsg');
-  const errorCity = document.getElementById('cityErrorMsg');
-  const errorEmail = document.getElementById('emailErrorMsg');
-  let inputFirstName;
+//formulaire 
 
+let form = document.querySelector(".cart__order__form");
+let firstName = document.getElementById("firstName");
+let lastName = document.getElementById("lastName");
+let address = document.getElementById("address");
+let city = document.getElementById("city");
+let email = document.getElementById("email");
+const errorFName = document.getElementById('firstNameErrorMsg');
+const errorLName = document.getElementById('lastNameErrorMsg');
+const errorAddress = document.getElementById('addressErrorMsg');
+const errorCity = document.getElementById('cityErrorMsg');
+const errorEmail = document.getElementById('emailErrorMsg');
+let inputFirstName;
+
+if (firstName) {
   firstName.addEventListener('blur', function () {
     validFirstName(this);
 
@@ -122,8 +125,8 @@ if (cartAndFormContainer) {
     orderFirstName = JSON.stringify(inputFirstName.value.toLowerCase());
     sessionStorage.setItem('Prénom', orderFirstName);
   };
-
-
+}
+if (lastName) {
   lastName.addEventListener('blur', function () {
     validLastName(this);
   });
@@ -140,7 +143,8 @@ if (cartAndFormContainer) {
     orderLaststName = JSON.stringify(inputLastName.value.toLowerCase());
     sessionStorage.setItem('Nom', orderLaststName);
   };
-
+}
+if (address) {
   address.addEventListener('blur', function () {
     validAddress(this);
   });
@@ -156,8 +160,9 @@ if (cartAndFormContainer) {
     orderAddress = JSON.stringify(inputAddress.value.toLowerCase());
     sessionStorage.setItem('Adresse', orderAddress);
   };
+}
 
-
+if (city) {
   city.addEventListener('blur', function () {
     validCity(this);
   });
@@ -173,8 +178,9 @@ if (cartAndFormContainer) {
     orderCity = JSON.stringify(inputCity.value.toLowerCase());
     sessionStorage.setItem('Ville', orderCity);
   };
+}
 
-
+if (email) {
   email.addEventListener('blur', function () {
     validEmail(this);
   });
@@ -190,12 +196,13 @@ if (cartAndFormContainer) {
     orderEmail = JSON.stringify(inputEmail.value.toLowerCase());
     sessionStorage.setItem('Email', orderEmail);
   };
+}
 
 
+//validation de commande
 
-  //validation de commande
-
-  // async function handleFormSubmit(e){
+// async function handleFormSubmit(e){
+if (kanapStorage) {
 
   function orderForm() {
 
@@ -206,85 +213,94 @@ if (cartAndFormContainer) {
       city: JSON.parse(sessionStorage.getItem('Ville')),
       email: JSON.parse(sessionStorage.getItem('Email')),
     }
-    if (firstName != null && lastName != null && address != null && city != null && email != null) {
-    return formContact;
+    if (formContact.firstName != null && formContact.lastName != null && formContact.address != null && formContact.city != null && formContact.email != null) {
+      return formContact;
     }
   }
   orderForm();
-
+console.log(orderForm());
   const product = [];
+
   function cartValidate() {
     for (kanap of kanapStorage) {
       let id = kanap.id;
-      
-      //  product.push(kanap)
-      
       product.push(id);
-      console.log(product);
-      // return product;
+      console.log(product); //pourquoi j'ai 2 tableaux qui apparaissent en console?===================================
     }
-    
-    //   for (let i = 0; i < kanapStorage.length; i ++ ){
-    //     // console.log(i);
-    //     console.log(kanapStorage[i]);
-    //     let ids = kanapStorage[i].id;
-    //     let products = []
-    //     products.push(ids)
-    //  console.log(products);
-    //     return products
-        
-    //     // console.log(product);
-    //   }
+    return product;
   }
-
-  let contact = orderForm();
-  // console.log(contact);
   products = cartValidate();
+}
+let contact = orderForm();
 
- 
-  // let order = {
-  //   'contact': orderForm(),
-  //   'produits': cartValidate()
-  // };
 
+
+if (contact != '' && products != '')  { // si le formulaire contient des produits et que le formulaire n'est pas vide
   let btnOrder = document.getElementById("order");
-  btnOrder.addEventListener('click', handleFormSubmit);
-  async function handleFormSubmit(e) {
-
-    e.preventDefault();
-
-    await fetch("http://localhost:3000/api/products/order", {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({contact, products})
-      })
-      .then(function (res) {
-        if (res.ok) {
-          console.log(res);
-          return res.json();
-        }
-      })
-      .then(async function (contact) {
-        if (contact){
-          // location.href = `confirmation.html`;
-          let orderId = contact.orderId;
-          console.log(contact);
-          console.log( orderId);
-          let confirmation = document.getElementById('orderId');
-          // confirmation.innerHtml = `${orderId}`;
-          // localStorage.clear();
-  
-          // orderId
-        }
-      })
-      .catch(function (err) { // s'il y a une erreur, je lance une fonction qui prévient l'utilisateur
-        alert("Une erreur est survenue");
-        
-
-      })
+  if (btnOrder) {
+    btnOrder.addEventListener('click', handleFormSubmit);
   }
+}
+else{  // sinon je raffraichi la page
+  Location.href
+}
 
+async function handleFormSubmit(e) {
+
+  e.preventDefault();
+  let urlId = 15;
+  // let orderId =  window.location;
+  const searchParams = new URLSearchParams(location.search);
+  searchParams.get(`${urlId}`);
+  location.pathname = `/front/html/confirmation.html?id=${urlId}`;
+
+
+
+  
+
+  await fetch("http://localhost:3000/api/products/order", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        contact,
+        products
+      })
+    })
+    .then(function (res) {
+      if (res.ok) {
+        // console.log(res);
+        return res.json();
+      }
+    })
+
+    .then(function (value) {
+      // let orderId = value.orderId;
+      // let urlId = `?id=${orderId}`;
+      // console.log(orderId);
+      // const searchParams = new URLSearchParams(location.search);
+      // console.log(window.location);
+      // searchParams.get(urlId);
+      console.log(searchParams);
+      // if (searchParams.has(orderId)){
+      // a.href = `?id=${product._id}`;
+      // location.pathname = `front/html/confirmation.html/${urlId}`;
+      // }
+
+
+      // let orderId = document.getElementById('orderId');
+      // console.log(orderNumber);
+      // orderId.innerHtml = `${orderNumber}`;
+      // localStorage.clear();
+
+
+    })
+    .catch(function (err) { // s'il y a une erreur, je lance une fonction qui prévient l'utilisateur
+      alert("Une erreur est survenue");
+
+
+
+    })
 }

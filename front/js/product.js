@@ -4,14 +4,14 @@ let urlId = `http://localhost:3000/api/products/${paramsId}`;
 let product = "";
 
 
-function getPostId() {// connection à l'api
-  fetch(urlId)
+function getPostId() {  // Afficher le produit avec l'id 
+  fetch(urlId)// connection à l'api
     .then(function (res) {
       if (res) {
         return res.json();
       }
     })
-    .then(async function (value) { //récupération de la requête
+    .then(async function (value) {  //récupération de la requête
       product = await value;
       if (product) {
         getPost(product);
@@ -24,7 +24,7 @@ function getPostId() {// connection à l'api
 getPostId();
 
 
-function getPost(product) {    //affichage du produit demandé
+function getPost(product) {  //affichage du produit demandé
 
   let item = document.querySelector('.item');
   let article = document.createElement('article');
