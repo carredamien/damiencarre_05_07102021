@@ -4,3 +4,5 @@ let order = document.getElementById('orderId');
 
 order.innerHTML = `<br><br> ${orderId}`;
 localStorage.clear();
+
+

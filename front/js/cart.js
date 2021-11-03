@@ -225,7 +225,6 @@ if (kanapStorage) {
     for (kanap of kanapStorage) {
       let id = kanap.id;
       product.push(id);
-      // console.log(product); //pourquoi j'ai 2 tableaux qui apparaissent en console?===================================
     }
     return product;
   }
@@ -235,8 +234,9 @@ if (kanapStorage) {
 
 
 
-  if (contact != '' && products != '') { // si le formulaire contient des produits et que le formulaire n'est pas vide
+  if (contact !== undefined && products !== undefined) { // si le formulaire contient des produits et que le formulaire n'est pas vide
     let btnOrder = document.getElementById("order");
+    console.log(contact);
     if (btnOrder) {
       btnOrder.addEventListener('click', handleFormSubmit);
     }
@@ -244,42 +244,43 @@ if (kanapStorage) {
     Location.href
   }
 
-async function handleFormSubmit(e) {
+  async function handleFormSubmit(e) {
 
-  e.preventDefault();
-
-  await fetch("http://localhost:3000/api/products/order", {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        contact,
-        products
+    e.preventDefault();
+    console.log(products);
+    console.log(contact);
+    await fetch("http://localhost:3000/api/products/order", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          contact,
+          products
+        })
       })
-    })
-    .then(function (res) {
-      if (res.ok) {
+      .then(function (res) {
+        if (res.ok) {
 
-        return res.json();
-      }
-    })
+          return res.json();
+        }
+      })
 
-    .then(function (value) {
-      let orderId = value.orderId; //je récupère le numéro de commande 
+      .then(function (value) {
+        let orderId = value.orderId; //je récupère le numéro de commande 
 
-      const searchParams = new URLSearchParams(location.search);
-      console.log(searchParams);
-      searchParams.get(`${order}`);
-      location.replace(`/front/html/confirmation.html?order=${orderId}`);
+        const searchParams = new URLSearchParams(location.search);
+        console.log(searchParams);
+        searchParams.get(`${order}`);
+        location.replace(`/front/html/confirmation.html?order=${orderId}`);
 
-    })
-    .catch(function (err) { // s'il y a une erreur, je lance une fonction qui prévient l'utilisateur
-      alert("Une erreur est survenue");
-
+      })
+      .catch(function (err) { // s'il y a une erreur, je lance une fonction qui prévient l'utilisateur
+        alert("Une erreur est survenue");
 
 
-    })
-}
+
+      })
+  }
 }
