@@ -105,15 +105,16 @@ function getPost(product) { //affichage du produit demandé
           } else {
 
             getStorage.push(kanap);
+            alert('Produit ajouté au panier');
 
           }
           localStorage.setItem("kanap", JSON.stringify(getStorage));
-
+          
         } else {
-
-
+          
           kanapStorage.push(kanap);
           localStorage.setItem("kanap", JSON.stringify(kanapStorage));
+          
         }
 
       } else {

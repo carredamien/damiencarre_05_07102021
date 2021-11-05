@@ -43,7 +43,7 @@ let app = {
         article.appendChild(articleTitle);
         let articleP = document.createElement('p');
         article.appendChild(articleP);
-        a.href = `?id=${product._id}`;
+        a.href = `./product.html?id=${product._id}`;
         articleImg.setAttribute('alt', product.altTxt);
         articleTitle.innerHTML = product.name;
         articleP.innerHTML = product.description;

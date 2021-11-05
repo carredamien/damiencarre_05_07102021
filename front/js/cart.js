@@ -243,7 +243,7 @@ if (contact !== undefined && products !== undefined) { // si le formulaire conti
         const searchParams = new URLSearchParams(location.search);
         console.log(searchParams);
         searchParams.get(`${order}`);
-        location.replace(`/front/html/confirmation.html?order=${value.orderId}`);
+        location.replace(`./confirmation.html?order=${value.orderId}`);
 
       })
       .catch(function (err) { // s'il y a une erreur, je lance une fonction qui prévient l'utilisateur
