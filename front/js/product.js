@@ -1,30 +1,30 @@
-let searchParams = new URLSearchParams(location.search);  //mise en place des variables
+let searchParams = new URLSearchParams(location.search); //mise en place des variables
 let paramsId = searchParams.get("id");
 let urlId = `http://localhost:3000/api/products/${paramsId}`;
 let product = "";
 
 
-function getPostId() {  // Afficher le produit avec l'id 
-  fetch(urlId)// connection à l'api
+function getPostId() { // Afficher le produit avec l'id 
+  fetch(urlId) // connection à l'api
     .then(function (res) {
       if (res) {
         return res.json();
       }
     })
-    .then(async function (value) {  //récupération de la requête
+    .then(async function (value) { //récupération de la requête
       product = await value;
       if (product) {
         getPost(product);
       }
     })
-    .catch(function (err) {  //gestion des erreurs
+    .catch(function (err) { //gestion des erreurs
       getError();
     })
 };
 getPostId();
 
 
-function getPost(product) {  //affichage du produit demandé
+function getPost(product) { //affichage du produit demandé
 
   let item = document.querySelector('.item');
   let article = document.createElement('article');
@@ -61,7 +61,7 @@ function getPost(product) {  //affichage du produit demandé
       </div>`;
 
 
-  function addToCart() {  //fonction d'ajout au panier 
+  function addToCart() { //fonction d'ajout au panier 
 
     const colors = document.querySelector('#colors');
     const quantity = document.querySelector('#quantity');
@@ -116,7 +116,7 @@ function getPost(product) {  //affichage du produit demandé
           localStorage.setItem("kanap", JSON.stringify(kanapStorage));
         }
 
-      }else{
+      } else {
         alert('Veuillez choisir une couleur et une quantité');
       }
 
@@ -126,9 +126,7 @@ function getPost(product) {  //affichage du produit demandé
   addToCart();
 };
 
-
-
-function getError() {  //fonction pour les erreurs
+function getError() { //fonction pour les erreurs
   let item = document.querySelector('.item');
   let article = document.createElement('article');
   item.appendChild(article);

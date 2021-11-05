@@ -1,4 +1,4 @@
-//APPROCHE MODULES
+//APPROCHE MODULES UNIQUEMENT SUR LA PAGE SCRIPT.JS
 let app = {
 
   url: `http://localhost:3000/api/products`, //Initialisation des variables
@@ -62,7 +62,6 @@ let app = {
   displayError: function () { //fonction d'affichage d'erreur
     let titleH2 = document.querySelector('.limitedWidthBlock .titles h2');
     titleH2.innerHTML = "Nous sommes désolés, une erreur est survenue";
-
   }
 
 };
